@@ -1,0 +1,43 @@
+Dataset:
+  # Preprocess data
+  name: "google-speech-command-v2"
+  root_dir: "F:/Datasets/speech_commands_v0.02"
+  output_path: "./output"
+  add_noise: True
+  background_noise_path: '_background_noise_'
+  labels: ['visual', 'wow', 'learn', 'backward', 'dog', 'two', 'left', 'happy', 'nine', 'go', 'up', 'bed', 'stop', 'one', 'zero', 'tree', 'seven', 'on', 'four', 'bird', 'right', 'eight', 'no', 'six', 'forward', 'house', 'marvin', 'sheila', 'five', 'off', 'three', 'down', 'cat', 'follow', 'yes']
+
+AudioPreprocessing:
+  # Training
+  sample_rate: 16000
+  n_mels: 64
+  n_mfcc: 64
+
+
+EncoderParameters:
+  n_maps: 45
+  margin: 0.5
+  classes_per_batch: 35
+  samples_per_class: 5
+  use_l2_normalized: True
+  num_workers: 6
+  optimizer: "sgd" # ["sgd", "adam"]
+  lr: 0.0001
+  lr_scheduler: "plateau" # ["plateau", "step"]
+  lr_scheduler_step_size: 50
+  lr_scheduler_patience: 5
+  lr_scheduler_gamma: 0.1
+  weight_decay: 0.01
+  max_epochs: 70
+
+Checkpoint:
+  # Checkpoint
+  checkpoint_path: "./checkpoints"
+  checkpoint_name : ""
+  resume: False
+
+  # Inference
+Inferences:
+  inference_path: "./inferences"
+  label_choice: False  #Choice label for store feature predict matching => store
+#  inference_file: "data.csv"
