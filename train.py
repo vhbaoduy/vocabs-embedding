@@ -89,7 +89,7 @@ def main():
                                   pin_memory=use_gpu)
     valid_dataloader = DataLoader(valid_dataset,
                                   batch_size=batch_size,
-                                  shuffle=False,
+                                  shuffle=True,
                                   num_workers=encoder_params['num_workers'],
                                   pin_memory=use_gpu)
 
@@ -257,10 +257,10 @@ def main():
         if epoch_loss < best_loss:
             best_loss = epoch_loss
             torch.save(save_checkpoint,
-                       configs.checkpoint_path + '/' + 'best-loss-%s.pth' % name)
+                       checkpoint_cfgs['checkpoint_path'] + '/' + 'best-loss-%s.pth' % name)
             # torch.save(model, configs.checkpoint_path + '/' + 'best-.pth')
 
-        torch.save(save_checkpoint, configs.checkpoint_path + '/' + 'last-checkpoint.pth')
+        torch.save(save_checkpoint, checkpoint_cfgs['checkpoint_path'] + '/' + 'last-checkpoint.pth')
         return epoch_loss
 
     print("Training ...")

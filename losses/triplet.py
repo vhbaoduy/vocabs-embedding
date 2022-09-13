@@ -77,7 +77,7 @@ def _get_triplets(embeddings, labels, type_fn='hardest', margin=1., use_cpu=True
     distance_matrix = _get_pairwise_distance_matrix(embeddings)
     distance_matrix = distance_matrix.cpu().data.numpy()
     triplets = []
-
+    anchor_positive = None
     for label in set(labels):
         mask = (labels == label)
         label_indices = np.where(mask)[0]
