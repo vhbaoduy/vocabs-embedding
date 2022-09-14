@@ -56,4 +56,4 @@ if __name__ == '__main__':
     # samples, sample_rate = utils.load_audio("F:\\Datasets\\speech_commands_v0.02\\house\\00b01445_nohash_0.wav", 16000)
     # s = librosa.feature.melspectrogram(y=samples, sr=sample_rate, n_mels=64,n_fft=512)
     # print(s.shape)
-    model
+    # model

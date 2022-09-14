@@ -2,9 +2,9 @@ from transforms import *
 from datasets import *
 from models import *
 from losses import *
+from metrics import *
 
 from torch.utils.data import WeightedRandomSampler, DataLoader
-from pytorch_metric_learning.samplers import MPerClassSampler
 import torch
 from tensorboardX import SummaryWriter
 import argparse
@@ -75,21 +75,20 @@ def main():
     # weights = train_dataset.make_weights_for_balanced_classes()
     # sampler = WeightedRandomSampler(weights, len(weights))
 
-    batch_size = encoder_params['samples_per_class'] * encoder_params['classes_per_batch']
-    sampler = MPerClassSampler(labels=labels,
-                               m=encoder_params['samples_per_class'],
-                               batch_size=batch_size
-                               )
+    n_samples = encoder_params['samples_per_class']
+    n_classes = encoder_params['classes_per_batch']
+    batch_size = n_classes * n_samples
+
+    train_sampler = BalancedBatchSampler(train_dataset.get_labels(), n_classes, n_samples)
+    valid_sampler = BalancedBatchSampler(valid_dataset.get_labels(), n_classes, n_samples)
 
     # Data loader
     train_dataloader = DataLoader(train_dataset,
-                                  batch_size=batch_size,
-                                  sampler=sampler,
+                                  sampler=train_sampler,
                                   num_workers=encoder_params['num_workers'],
                                   pin_memory=use_gpu)
     valid_dataloader = DataLoader(valid_dataset,
-                                  batch_size=batch_size,
-                                  shuffle=True,
+                                  sampler=valid_sampler,
                                   num_workers=encoder_params['num_workers'],
                                   pin_memory=use_gpu)
 
@@ -98,24 +97,28 @@ def main():
     if use_gpu:
         model = torch.nn.DataParallel(model).cuda()
 
+    # Triplet Selector
+    margin = encoder_params['margin']
+    triplet_selector = RandomNegativeTripletSelector(margin)
+
     # Init criterion
-    triplet_loss = OnlineTripletLoss(margin=encoder_params['margin'],
-                                     selection_type='hardest',
-                                     use_gpu=use_gpu)
+    triplet_loss = OnlineTripletLoss(margin, triplet_selector)
 
     if encoder_params['use_l2_normalized']:
         l2_regularizer = L2Regularizer()
 
     # Init optimizer
+    lr = encoder_params['lr']
+    weight_decay = encoder_params['weight_decay']
     if encoder_params['optimizer'] == 'sgd':
         optimizer = torch.optim.SGD(model.parameters(),
-                                    lr=encoder_params['lr'],
+                                    lr=lr,
                                     momentum=0.9,
-                                    weight_decay=encoder_params['weight_decay'])
+                                    weight_decay=weight_decay)
     else:
         optimizer = torch.optim.Adam(model.parameters(),
-                                     lr=encoder_params['lr'],
-                                     weight_decay=encoder_params['weight_decay'])
+                                     lr=lr,
+                                     weight_decay=weight_decay)
 
     # Init learning rate scheduler
     if encoder_params['lr_scheduler'] == 'plateau':
@@ -126,6 +129,9 @@ def main():
         lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=encoder_params['lr_scheduler_step_size'],
                                                        gamma=encoder_params['lr_scheduler_gamma'],
                                                        last_epoch=start_epoch - 1)
+
+    # Init metric
+    metric_learning = AverageNonzeroTripletsMetric()
 
     checkpoint_cfgs = configs['Checkpoint']
     # Resuming mode
@@ -147,10 +153,13 @@ def main():
 
     # Init name model and board
     name = 'resnet15_%s_%s' % (encoder_params['optimizer'], batch_size)
-    writer = SummaryWriter(comment=('_speech_commands_') + name)
+    writer = SummaryWriter(comment='_speech_commands_' + name)
 
     def train(epoch):
         global global_step
+        # global metric_learning
+        metric_learning.reset()
+
         phase = 'train'
         print(f'Epoch {epoch} - lr {get_lr(optimizer)}')
         writer.add_scalar('%s/learning_rate' % phase, get_lr(optimizer), epoch)
@@ -164,7 +173,6 @@ def main():
         pbar = tqdm(train_dataloader)
         for batch in pbar:
             inputs = batch['input']
-            # inputs = torch.unsqueeze(inputs, 1)
             targets = batch['target']
 
             inputs = torch.autograd.Variable(inputs, requires_grad=True)
@@ -179,10 +187,12 @@ def main():
             if l2_regularizer is not None:
                 embeddings = l2_regularizer(embeddings)
 
-            loss = triplet_loss(embeddings, targets)
+            loss, total_triplet = triplet_loss(embeddings, targets)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
+
+            metric_learning(embeddings, targets, total_triplet)
 
             it += 1
             global_step += 1
@@ -191,6 +201,7 @@ def main():
 
             pbar.set_postfix({
                 'loss': "%.05f" % (running_loss / it),
+                metric_learning.name(): metric_learning.value()
                 # 'acc': "%.02f%%" % (100 * correct / total)
             })
 
@@ -199,6 +210,8 @@ def main():
 
     def valid(epoch):
         global best_accuracy, best_loss, global_step
+        # global metric_learning
+        metric_learning.reset()
 
         phase = 'valid'
         model.eval()  # Set model to evaluate mode
@@ -222,7 +235,9 @@ def main():
                 if l2_regularizer is not None:
                     embeddings = l2_regularizer(embeddings)
 
-                loss = triplet_loss(embeddings, targets)
+                loss, total_triplet = triplet_loss(embeddings, targets)
+
+                metric_learning(embeddings, targets, total_triplet)
 
                 # statistics
                 it += 1
@@ -234,6 +249,7 @@ def main():
                 # update the progress bar
                 pbar.set_postfix({
                     'loss': "%.05f" % (running_loss / it),
+                    metric_learning.name(): metric_learning.value()
                 })
 
         # accuracy = correct / total
