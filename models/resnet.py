@@ -6,12 +6,13 @@ import utils
 
 
 class Res15(nn.Module):
-    def __init__(self, n_maps, n_dims):
+    def __init__(self, n_maps, n_dims, l2_normalized=True):
         super().__init__()
         self.n_maps = n_maps
         self.n_dims = n_dims
         self.conv0 = nn.Conv2d(1, n_maps, (3, 3), padding=(1, 1), bias=False)
         self.n_layers = n_layers = 13
+        self.l2_normalized = l2_normalized
         dilation = True
         if dilation:
             self.convs = [nn.Conv2d(n_maps, n_maps, (3, 3), padding=int(2 ** (i // 3)), dilation=int(2 ** (i // 3)),
@@ -24,6 +25,7 @@ class Res15(nn.Module):
             self.add_module("conv{}".format(i + 1), conv)
 
         self.add_module("fc", nn.Linear(n_maps, n_dims))
+        self.add_module("prelu", nn.PReLU())
 
     def forward(self, audio_signal):
         x = audio_signal.unsqueeze(1)
@@ -41,11 +43,13 @@ class Res15(nn.Module):
             if i > 0:
                 x = getattr(self, "bn{}".format(i))(x)
         x = x.view(x.size(0), x.size(1), -1)  # shape: (batch, feats, o3)
-        x = torch.mean(x, 2)
+        x = torch.mean(x, dim=2)
         x = getattr(self, "fc")(x)
-        x = nn.PReLU()(x)
+        x = getattr(self, "prelu")(x)
+        if self.l2_normalized:
+            x = F.normalize(x, p=2, dim=1)
+
         # x = x.unsqueeze()
-        # print(x.size())
         return x
 
     def freeze(self):
@@ -55,8 +59,8 @@ class Res15(nn.Module):
 
 if __name__ == '__main__':
     model = Res15(45, 128)
-    audio = torch.rand((128, 32, 32), requires_grad=False)
-    # feat = model(audio)
+    audio = torch.rand((128, 64, 32), requires_grad=False)
+    feat = model(audio)
     # print(feat.size())
     # print(model)
     # samples, sample_rate = utils.load_audio("F:\\Datasets\\speech_commands_v0.02\\house\\00b01445_nohash_0.wav", 16000)

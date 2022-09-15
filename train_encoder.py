@@ -99,7 +99,11 @@ def main():
                                   pin_memory=use_gpu)
 
     # Create model
-    model = Res15(encoder_params['n_maps'], n_dims)
+    if encoder_params['use_l2_normalized']:
+        model = Res15(encoder_params['n_maps'], n_dims, l2_normalized=True)
+    else:
+        model = Res15(encoder_params['n_maps'], n_dims, l2_normalized=False)
+
     if use_gpu:
         model = torch.nn.DataParallel(model).cuda()
 
@@ -110,8 +114,7 @@ def main():
     # Init criterion
     triplet_loss = OnlineTripletLoss(margin, triplet_selector)
 
-    if encoder_params['use_l2_normalized']:
-        l2_regularizer = L2Regularizer()
+
 
     # Init optimizer
     lr = encoder_params['lr']
@@ -192,9 +195,6 @@ def main():
                 targets = targets.to(device)
 
             embeddings = model(inputs)
-            # print(embeddings)
-            if l2_regularizer is not None:
-                embeddings = l2_regularizer(embeddings)
 
             loss, total_triplet = triplet_loss(embeddings, targets)
             optimizer.zero_grad()
@@ -241,9 +241,6 @@ def main():
 
                 # forward
                 embeddings = model(inputs)
-                if l2_regularizer is not None:
-                    embeddings = l2_regularizer(embeddings)
-
                 loss, total_triplet = triplet_loss(embeddings, targets)
 
                 metric_learning(embeddings, targets, total_triplet)

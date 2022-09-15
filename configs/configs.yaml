@@ -10,8 +10,8 @@ Dataset:
 AudioPreprocessing:
   # Training
   sample_rate: 16000
-  n_mels: 64
-  n_mfcc: 64
+  n_mels: 32
+  n_mfcc: 32
 
 
 EncoderParameters:
@@ -28,7 +28,7 @@ EncoderParameters:
   lr_scheduler_patience: 5
   lr_scheduler_gamma: 0.1
   weight_decay: 0.01
-  max_epochs: 20
+  max_epochs: 50
 
 DecoderParameters:
   classifier: "mlp"    # ["mlp", "knn"]
