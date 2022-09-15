@@ -6,9 +6,10 @@ import utils
 
 
 class Res15(nn.Module):
-    def __init__(self, n_maps):
+    def __init__(self, n_maps, n_dims):
         super().__init__()
-        n_maps = n_maps
+        self.n_maps = n_maps
+        self.n_dims = n_dims
         self.conv0 = nn.Conv2d(1, n_maps, (3, 3), padding=(1, 1), bias=False)
         self.n_layers = n_layers = 13
         dilation = True
@@ -21,6 +22,8 @@ class Res15(nn.Module):
         for i, conv in enumerate(self.convs):
             self.add_module("bn{}".format(i + 1), nn.BatchNorm2d(n_maps, affine=False))
             self.add_module("conv{}".format(i + 1), conv)
+
+        self.add_module("fc", nn.Linear(n_maps, n_dims))
 
     def forward(self, audio_signal):
         x = audio_signal.unsqueeze(1)
@@ -39,6 +42,8 @@ class Res15(nn.Module):
                 x = getattr(self, "bn{}".format(i))(x)
         x = x.view(x.size(0), x.size(1), -1)  # shape: (batch, feats, o3)
         x = torch.mean(x, 2)
+        x = getattr(self, "fc")(x)
+        x = nn.PReLU()(x)
         # x = x.unsqueeze()
         # print(x.size())
         return x
@@ -49,10 +54,11 @@ class Res15(nn.Module):
 
 
 if __name__ == '__main__':
-    model = Res15(45)
+    model = Res15(45, 128)
     audio = torch.rand((128, 32, 32), requires_grad=False)
-    feat, _ = model(audio)
-    print(model)
+    # feat = model(audio)
+    # print(feat.size())
+    # print(model)
     # samples, sample_rate = utils.load_audio("F:\\Datasets\\speech_commands_v0.02\\house\\00b01445_nohash_0.wav", 16000)
     # s = librosa.feature.melspectrogram(y=samples, sr=sample_rate, n_mels=64,n_fft=512)
     # print(s.shape)

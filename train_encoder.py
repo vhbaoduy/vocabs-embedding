@@ -5,6 +5,7 @@ from losses import *
 from metrics import *
 
 from torch.utils.data import WeightedRandomSampler, DataLoader
+from pytorch_metric_learning.samplers import MPerClassSampler
 import torch
 from tensorboardX import SummaryWriter
 import argparse
@@ -28,7 +29,10 @@ def main():
     global best_accuracy, global_step, start_epoch, start_timestamp, best_loss
     parser = argparse.ArgumentParser(description='Train model for speech command',
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--config_file', type=str, default='configs.yaml')
+    parser.add_argument('--n_dims', type=int, default=128, help="dimension of embeddings")
+    parser.add_argument('--feature', type=str, default='mel_spectrogram', choices=['mfcc', 'mel_spectrogram'],
+                        help="type of feature input")
+    parser.add_argument('--config_file', type=str, default='configs.yaml',help="name of config file")
 
     use_gpu = torch.cuda.is_available()
     device = 'cpu'
@@ -40,6 +44,8 @@ def main():
     # Parse agr and load config
     args = parser.parse_args()
     path = os.path.join('./configs', args.config_file)
+    feature = args.feature
+    n_dims = args.n_dims
 
     configs = utils.load_config_file(path)
     dataset_cfgs = configs['Dataset']
@@ -52,10 +58,11 @@ def main():
     background_noise_path = None
     if dataset_cfgs['add_noise']:
         background_noise_path = os.path.join(dataset_cfgs['root_dir'], dataset_cfgs['background_noise_path'])
+
     # Build transform
-    train_transform = build_transform(audio_preprocessing_cfgs, mode='train',
+    train_transform = build_transform(audio_preprocessing_cfgs, mode='train', feature_name=feature,
                                       background_noise_path=background_noise_path)
-    valid_transform = build_transform(audio_preprocessing_cfgs, mode='valid')
+    valid_transform = build_transform(audio_preprocessing_cfgs, mode='valid', feature_name=feature)
 
     train_dataset = SpeechCommandsDataset(dataset_cfgs['root_dir'],
                                           df_train,
@@ -71,7 +78,6 @@ def main():
     # print(len(dataset_cfgs['labels']))
     encoder_params = configs['EncoderParameters']
 
-    labels = train_dataset.get_labels()
     # weights = train_dataset.make_weights_for_balanced_classes()
     # sampler = WeightedRandomSampler(weights, len(weights))
 
@@ -84,16 +90,16 @@ def main():
 
     # Data loader
     train_dataloader = DataLoader(train_dataset,
-                                  sampler=train_sampler,
+                                  batch_sampler=train_sampler,
                                   num_workers=encoder_params['num_workers'],
                                   pin_memory=use_gpu)
     valid_dataloader = DataLoader(valid_dataset,
-                                  sampler=valid_sampler,
+                                  batch_sampler=valid_sampler,
                                   num_workers=encoder_params['num_workers'],
                                   pin_memory=use_gpu)
 
     # Create model
-    model = Res15(encoder_params['n_maps'])
+    model = Res15(encoder_params['n_maps'], n_dims)
     if use_gpu:
         model = torch.nn.DataParallel(model).cuda()
 
@@ -121,14 +127,17 @@ def main():
                                      weight_decay=weight_decay)
 
     # Init learning rate scheduler
-    if encoder_params['lr_scheduler'] == 'plateau':
+    scheduler_name = encoder_params['lr_scheduler']
+    if  scheduler_name == 'plateau':
         lr_scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer,
                                                                   patience=encoder_params['lr_scheduler_patience'],
                                                                   factor=encoder_params['lr_scheduler_gamma'])
-    else:
+    elif scheduler_name == 'step':
         lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=encoder_params['lr_scheduler_step_size'],
                                                        gamma=encoder_params['lr_scheduler_gamma'],
                                                        last_epoch=start_epoch - 1)
+    else:
+        lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max= 10)
 
     # Init metric
     metric_learning = AverageNonzeroTripletsMetric()
@@ -152,7 +161,7 @@ def main():
         os.mkdir(checkpoint_cfgs['checkpoint_path'])
 
     # Init name model and board
-    name = 'resnet15_%s_%s' % (encoder_params['optimizer'], batch_size)
+    name = 'resnet15_%s_%s_%s_%s' % (encoder_params['optimizer'], batch_size,feature,scheduler_name)
     writer = SummaryWriter(comment='_speech_commands_' + name)
 
     def train(epoch):
@@ -282,13 +291,16 @@ def main():
     print("Training ...")
     since = time.time()
     for epoch in range(start_epoch, encoder_params['max_epochs']):
-        if encoder_params['lr_scheduler'] == 'step':
+        if scheduler_name == 'step':
             lr_scheduler.step()
 
         train(epoch)
         epoch_loss = valid(epoch)
 
-        if encoder_params['lr_scheduler'] == 'plateau':
+        if scheduler_name == 'cosine':
+            lr_scheduler.step()
+
+        if scheduler_name == 'plateau':
             lr_scheduler.step(metrics=epoch_loss)
 
         time_elapsed = time.time() - since

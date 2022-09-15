@@ -2,7 +2,7 @@ import os
 import numpy as np
 import torch
 from torch.utils.data import Dataset
-from torch.utils.data.sampler import BatchSampler
+from torch.utils.data.sampler import BatchSampler, Sampler
 import utils
 
 
