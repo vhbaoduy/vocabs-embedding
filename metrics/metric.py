@@ -28,9 +28,9 @@ class AccumulatedAccuracyMetric(Metric):
         self.total = 0
 
     def __call__(self, outputs, target, loss):
-        pred = outputs[0].data.max(1, keepdim=True)[1]
-        self.correct += pred.eq(target[0].data.view_as(pred)).cpu().sum()
-        self.total += target[0].size(0)
+        pred = outputs.data.max(1, keepdim=True)[1]
+        self.correct += pred.eq(target.data.view_as(pred)).cpu().sum()
+        self.total += targetg.size(0)
         return self.value()
 
     def reset(self):
@@ -52,8 +52,8 @@ class AverageNonzeroTripletsMetric(Metric):
     def __init__(self):
         self.values = []
 
-    def __call__(self, outputs, target, len_triplet):
-        self.values.append(len_triplet)
+    def __call__(self, outputs, target, loss):
+        self.values.append(loss[1])
         return self.value()
 
     def reset(self):
