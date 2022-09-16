@@ -109,7 +109,14 @@ def main():
 
     # Triplet Selector
     margin = encoder_params['margin']
-    triplet_selector = RandomNegativeTripletSelector(margin)
+
+    triplet_selector_name = args.triplet_selector
+    if triplet_selector_name == 'random_hard':
+        triplet_selector = RandomNegativeTripletSelector(margin)
+    elif triplet_selector_name == 'hardest':
+        triplet_selector = HardestNegativeTripletSelector(margin)
+    else:
+        triplet_selector = SemihardNegativeTripletSelector(margin)
 
     # Init criterion
     triplet_loss = OnlineTripletLoss(margin, triplet_selector)
