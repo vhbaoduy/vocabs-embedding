@@ -32,7 +32,7 @@ EncoderParameters:
 
 DecoderParameters:
   classifier: "mlp"    # ["mlp", "knn"]
-  hidden_size: [64]
+  hidden_sizes: [128,64]
   use_softmax: True
   batch_size: 128
   num_workers: 6
@@ -44,6 +44,7 @@ DecoderParameters:
   lr_scheduler_gamma: 0.1
   weight_decay: 0.01
   max_epochs: 70
+
 
 
 Checkpoint:

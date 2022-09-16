@@ -52,9 +52,6 @@ class Res15(nn.Module):
         # x = x.unsqueeze()
         return x
 
-    def freeze(self):
-        for parameter in self.parameters():
-            parameter.requires_grad = False
 
 
 if __name__ == '__main__':

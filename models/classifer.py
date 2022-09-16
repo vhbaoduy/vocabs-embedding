@@ -15,15 +15,15 @@ class Classifier(torch.nn.Module):
                 self.fc.append(nn.Linear(hidden_cfgs[i - 1], hidden_cfgs[i]))
             for i, layer in enumerate(self.fc):
                 self.add_module("fc{}".format(i + 1), layer)
-            self.classify = nn.Linear(hidden_cfgs[-1], n_classes)
+            self.classifier = nn.Linear(hidden_cfgs[-1], n_classes)
         else:
-            self.classify = nn.Linear(in_features=emb_dims, out_features=n_classes)
+            self.classifier = nn.Linear(in_features=emb_dims, out_features=n_classes)
 
     def forward(self, x):
         if self.fc is not None:
             for i in range(len(self.fc)):
                 x = getattr(self, "fc{}".format(i + 1))(x)
-        out = self.classify(x)
+        out = self.classifier(x)
         if self.use_softmax:
             out = torch.softmax(out, dim=1)
         return out

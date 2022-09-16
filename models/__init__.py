@@ -11,4 +11,9 @@ def get_model(name, n_dims, l2_normalized, n_maps=None):
         return Res15(n_maps, n_dims, l2_normalized=l2_normalized)
 
     if name == 'resnext':
-        return  CifarResNeXt(n_dims=n_dims, l2_normalized=l2_normalized)
+        return  CifarResNeXt(n_dims=n_dims, l2_normalized=l2_normalized, in_channels=1)
+
+
+def freeze(model):
+    for parameter in model.parameters():
+        parameter.requires_grad = False
