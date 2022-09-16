@@ -33,6 +33,9 @@ def main():
     parser.add_argument('--feature', type=str, default='mel_spectrogram', choices=['mfcc', 'mel_spectrogram'],
                         help="type of feature input")
     parser.add_argument('--config_file', type=str, default='configs.yaml',help="name of config file")
+    parser.add_argument('--triplet_selector', type=str, default='hardest', choices=['hardest', 'random_hard','semi_hard'],
+                        help="type of triplet selector")
+    parser.add_argument('--model', type=str, default='resnet15', help="name of model")
 
     use_gpu = torch.cuda.is_available()
     device = 'cpu'
@@ -99,10 +102,7 @@ def main():
                                   pin_memory=use_gpu)
 
     # Create model
-    if encoder_params['use_l2_normalized']:
-        model = Res15(encoder_params['n_maps'], n_dims, l2_normalized=True)
-    else:
-        model = Res15(encoder_params['n_maps'], n_dims, l2_normalized=False)
+    model = get_model(args.model, n_dims, encoder_params['use_l2_normalized'],n_maps=encoder_params['n_maps'])
 
     if use_gpu:
         model = torch.nn.DataParallel(model).cuda()
@@ -164,7 +164,7 @@ def main():
         os.mkdir(checkpoint_cfgs['checkpoint_path'])
 
     # Init name model and board
-    name = 'resnet15_%s_%s_%s_%s' % (encoder_params['optimizer'], batch_size,feature,scheduler_name)
+    name = '%s_%s_%s_%s_%s' % (args.model, encoder_params['optimizer'], batch_size,feature,scheduler_name)
     writer = SummaryWriter(comment='_speech_commands_' + name)
 
     def train(epoch):
@@ -279,7 +279,7 @@ def main():
         if epoch_loss < best_loss:
             best_loss = epoch_loss
             torch.save(save_checkpoint,
-                       checkpoint_cfgs['checkpoint_path'] + '/' + 'best-loss-%s.pth' % name)
+                       checkpoint_cfgs['checkpoint_path'] + '/' + 'best-loss-%s-%s.pth' % (best_loss, name))
             # torch.save(model, configs.checkpoint_path + '/' + 'best-.pth')
 
         torch.save(save_checkpoint, checkpoint_cfgs['checkpoint_path'] + '/' + 'last-checkpoint.pth')
