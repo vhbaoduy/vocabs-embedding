@@ -3,11 +3,14 @@ from .transform_wav import *
 from .transform_stft import *
 from torchvision.transforms import Compose
 
-
-def build_transform(audio_preprocessing_cfg, mode='train',feature_name='mel_spectrogram', background_noise_path=None):
+def build_transform(audio_preprocessing_cfg,
+                    mode='train',
+                    feature_name='mel_spectrogram',
+                    background_noise_path=None):
     """
     Build transform for train and valid dataset
-    :param backgroud_noise_path:
+    :param background_noise_path:
+    :param feature_name:
     :param audio_preprocessing_cfg: configuration of audio preprocessing
     :param mode: 'train', 'valid'
     :return: data augmentation, background noise, feature transform

@@ -70,7 +70,7 @@ class CifarResNeXt(nn.Module):
     https://arxiv.org/pdf/1611.05431.pdf
     """
 
-    def __init__(self, cardinality=8, depth=29, base_width=64, widen_factor=4, in_channels=3, n_dims=128, l2_normalized=False):
+    def __init__(self, cardinality=8, depth=29, base_width=64, widen_factor=4, in_channels=3, n_dims=128):
         """ Constructor
 
         Args:
@@ -88,7 +88,6 @@ class CifarResNeXt(nn.Module):
         # self.nlabels = nlabels
         self.output_size = 64
         self.n_dims = n_dims
-        self.l2_normalized = l2_normalized
         self.stages = [64, 64 * self.widen_factor, 128 * self.widen_factor, 256 * self.widen_factor]
 
         self.conv_1_3x3 = nn.Conv2d(in_channels, 64, 3, 1, 1, bias=False)
@@ -145,16 +144,5 @@ class CifarResNeXt(nn.Module):
         x = F.avg_pool2d(x, 8, 1)
         x = x.view(-1, self.stages[3])
         x = getattr(self, 'fc')(x)
-        if self.l2_normalized:
-            x = F.normalize(x, p=2, dim=1)
         return x
-if __name__ == '__main__':
-    model = CifarResNeXt(nlabels=35, in_channels=1)
-    audio = torch.rand((128, 32, 32), requires_grad=False)
-    feat = model(audio)
-    # print(feat.size())
-    # print(model)
-    # samples, sample_rate = utils.load_audio("F:\\Datasets\\speech_commands_v0.02\\house\\00b01445_nohash_0.wav", 16000)
-    # s = librosa.feature.melspectrogram(y=samples, sr=sample_rate, n_mels=64,n_fft=512)
-    # print(s.shape)
-    # model
+

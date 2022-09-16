@@ -52,8 +52,8 @@ class AverageNonzeroTripletsMetric(Metric):
     def __init__(self):
         self.values = []
 
-    def __call__(self, outputs, target, len_triplet):
-        self.values.append(len_triplet)
+    def __call__(self, outputs, target, loss):
+        self.values.append(loss[1])
         return self.value()
 
     def reset(self):
