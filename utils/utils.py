@@ -57,5 +57,6 @@ def load_audio(path: str, sample_rate: int):
 def is_apply_transform(prob=0.5):
     return random.random() < prob
 
+
 def get_lr(opt):
     return opt.param_groups[0]['lr']
