@@ -47,7 +47,7 @@ def fit(model,
         do_train(model, train_loader, optimizer, loss_fn, metrics, use_gpu)
         epoch_loss, metrics = do_test(model, val_loader, loss_fn, metrics, use_gpu)
         if scheduler_name == "plateau":
-            scheduler.step(metric=epoch_loss)
+            scheduler.step(metrics=epoch_loss)
         acc = 0
         for metric in metrics:
             if metric.name() == 'Accuracy':
@@ -98,7 +98,7 @@ def do_train(model,
             targets = targets.to('cuda')
 
         optimizer.zero_grad()
-        preds, feat = model(inputs, targets)
+        preds, feat = model(inputs)
 
         loss = loss_fn(preds, feat, targets)
         losses.append(loss[0].item())
@@ -109,11 +109,11 @@ def do_train(model,
         for metric in metrics:
             metric(preds, targets, loss)
 
-        message = 'lr: {:.6f} - Loss: {:.6f}'.format(utils.get_lr(optimizer), np.mean(losses))
+        ordered_dict = {'lr': utils.get_lr(optimizer), 'Loss': np.mean(losses)}
         for metric in metrics:
-            message += '\t{}: {}'.format(metric.name(), metric.value())
+            ordered_dict[metric.name()] = metric.value()
 
-        pbar.set_description(message)
+        pbar.set_postfix(ordered_dict)
 
 
 def do_test(model,
@@ -137,7 +137,7 @@ def do_test(model,
                 inputs = inputs.to('cuda')
                 targets = targets.to('cuda')
 
-            preds, feat = model(inputs, targets)
+            preds, feat = model(inputs)
             loss = loss_fn(preds, feat, targets)
 
             losses.append(loss[0].item())
@@ -146,11 +146,11 @@ def do_test(model,
             for metric in metrics:
                 metric(preds, targets, loss)
 
-            message = 'Loss: {:.6f}'.format(np.mean(losses))
+            ordered_dict = {'Loss': np.mean(losses)}
             for metric in metrics:
-                message += '\t{}: {}'.format(metric.name(), metric.value())
+                ordered_dict[metric.name()] = metric.value()
 
-            pbar.set_description(message)
+            pbar.set_postfix(ordered_dict)
         return np.mean(losses), metrics
 
 

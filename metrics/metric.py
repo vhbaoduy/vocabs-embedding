@@ -30,7 +30,7 @@ class AccumulatedAccuracyMetric(Metric):
     def __call__(self, outputs, target, loss):
         pred = outputs.data.max(1, keepdim=True)[1]
         self.correct += pred.eq(target.data.view_as(pred)).cpu().sum()
-        self.total += targetg.size(0)
+        self.total += target.size(0)
         return self.value()
 
     def reset(self):
