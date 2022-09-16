@@ -2,17 +2,14 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
-import utils
-
 
 class Res15(nn.Module):
-    def __init__(self, n_maps, n_dims, l2_normalized=True):
+    def __init__(self, n_maps, n_dims):
         super().__init__()
         self.n_maps = n_maps
         self.n_dims = n_dims
         self.conv0 = nn.Conv2d(1, n_maps, (3, 3), padding=(1, 1), bias=False)
         self.n_layers = n_layers = 13
-        self.l2_normalized = l2_normalized
         dilation = True
         if dilation:
             self.convs = [nn.Conv2d(n_maps, n_maps, (3, 3), padding=int(2 ** (i // 3)), dilation=int(2 ** (i // 3)),
@@ -46,21 +43,6 @@ class Res15(nn.Module):
         x = torch.mean(x, dim=2)
         x = getattr(self, "fc")(x)
         x = getattr(self, "prelu")(x)
-        if self.l2_normalized:
-            x = F.normalize(x, p=2, dim=1)
-
         # x = x.unsqueeze()
         return x
 
-
-
-if __name__ == '__main__':
-    model = Res15(45, 128)
-    audio = torch.rand((128, 64, 32), requires_grad=False)
-    feat = model(audio)
-    # print(feat.size())
-    # print(model)
-    # samples, sample_rate = utils.load_audio("F:\\Datasets\\speech_commands_v0.02\\house\\00b01445_nohash_0.wav", 16000)
-    # s = librosa.feature.melspectrogram(y=samples, sr=sample_rate, n_mels=64,n_fft=512)
-    # print(s.shape)
-    # model

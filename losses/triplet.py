@@ -1,6 +1,3 @@
-import torch
-import numpy as np
-from itertools import combinations
 import torch.nn.functional as F
 import torch.nn as nn
 
@@ -30,20 +27,3 @@ class OnlineTripletLoss(nn.Module):
         losses = F.relu(ap_distances - an_distances + self.margin)
 
         return losses.mean(), len(triplets)
-
-
-if __name__ == '__main__':
-    pass
-    # embs = torch.rand((128,45), requires_grad=False)
-    # print(embs)
-    # l2_re = L2Regularizer()
-    # # labels = []
-    # # for i in range(8):
-    # #     labels.extend([i]*16)
-    # # labels = np.array(labels)
-    # # labels = torch.LongTensor(labels)
-    # # triplets_fn = OnlineTripletLoss(0.5, 'hardest', False)
-    # # loss = triplets_fn(embs, labels)
-    # embs = l2_re(embs)
-    # print(embs)
-    # print(embs.size())
