@@ -38,11 +38,11 @@ def fit(model,
     for i in range(0, start_epoch):
         scheduler.step()
 
+    since = time.time()
     for epoch in range(start_epoch, max_epochs):
+        print("Epoch ", epoch)
         if scheduler_name != "plateau":
             scheduler.step()
-
-        since = time.time()
 
         do_train(model, train_loader, optimizer, loss_fn, metrics, use_gpu)
         epoch_loss, metrics = do_test(model, val_loader, loss_fn, metrics, use_gpu)
@@ -73,7 +73,7 @@ def fit(model,
         time_str = 'Total time elapsed: {:.0f}h {:.0f}m {:.0f}s '.format(time_elapsed // 3600,
                                                                          time_elapsed % 3600 // 60,
                                                                          time_elapsed % 60)
-        print("%s, Best loss %f, Best accuracy" % (time_str, best_loss, best_acc))
+        print("%s, Best loss %f, Best accuracy %.02f%%" % (time_str, best_loss, best_acc))
 
     print("Finished ...")
 def do_train(model,
@@ -88,7 +88,7 @@ def do_train(model,
     model.train()
     losses = []
     total_loss = 0
-    pbar = tqdm(train_loader, desc='Training: ')
+    pbar = tqdm(train_loader, desc='Train: ')
     for batch in pbar:
         inputs = batch['input']
         targets = batch['target']
