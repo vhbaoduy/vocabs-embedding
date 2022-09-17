@@ -19,6 +19,7 @@ def get_scheduler(param_cfgs, optimizer):
     elif scheduler_name == 'step':
         scheduler = torch.optim.lr_scheduler.StepLR(
             optimizer,
+            step_size=param_cfgs['lr_scheduler_step_size'],
             gamma=param_cfgs['lr_scheduler_gamma'],
             last_epoch=-1
         )
