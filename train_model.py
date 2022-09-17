@@ -44,6 +44,7 @@ if __name__ == '__main__':
                         choices=['hardest', 'random_hard', 'semi_hard'],
                         help="type of triplet selector")
     parser.add_argument('-alpha', type=float, default=0.5)
+    parser.add_argument('-beta', type=float, default=0.5)
 
     args = parser.parse_args()
 
@@ -140,12 +141,13 @@ if __name__ == '__main__':
 
     loss_fn = make_loss_fn(selective_type=triplet_selector,
                            margin=param_cfgs['triplet_margin'],
-                           alpha=args.alpha)
+                           alpha=args.alpha,
+                           beta=args.beta)
 
     checkpoint_path = None
     if checkpoint_cfgs['resume']:
         print("Resuming a checkpoint '%s'" % checkpoint_cfgs['checkpoint_name'])
-        checkpoint_path = torch.load(os.path.join(checkpoint_cfgs['checkpoint_path'], checkpoint_cfgs['checkpoint_name']))
+        checkpoint_path = os.path.join(checkpoint_cfgs['checkpoint_path'], checkpoint_cfgs['checkpoint_name'])
 
         # Create checkpoint path
     if not os.path.exists(checkpoint_cfgs['checkpoint_path']):

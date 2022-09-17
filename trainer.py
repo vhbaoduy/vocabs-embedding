@@ -36,7 +36,8 @@ def fit(model,
         start_epoch = checkpoint.get('epoch', start_epoch)
 
     for i in range(0, start_epoch):
-        scheduler.step()
+        if scheduler_name != "plateau":
+            scheduler.step()
 
     since = time.time()
     for epoch in range(start_epoch, max_epochs):

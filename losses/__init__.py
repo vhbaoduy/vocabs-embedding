@@ -4,8 +4,11 @@ from .triplet_selector import *
 
 def make_loss_fn(selective_type,
                  margin,
-                 alpha):
+                 alpha,
+                 beta):
     """
+    :param beta:
+    :param alpha:
     :param selective_type:
     :param margin:
     :return:
@@ -22,6 +25,6 @@ def make_loss_fn(selective_type,
 
     def loss_fn(scores, feat, target):
         loss, len_triplet = triplet_loss(feat, target)
-        return alpha * loss + (1-alpha) * F.cross_entropy(scores, target), len_triplet
+        return alpha * loss + beta * F.cross_entropy(scores, target), len_triplet
 
     return loss_fn
