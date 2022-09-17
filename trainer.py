@@ -31,7 +31,7 @@ def fit(model,
         model.float()
         optimizer.load_state_dict(checkpoint['optimizer'])
 
-        # best_accuracy = checkpoint.get('accuracy', best_accuracy)
+        best_acc = checkpoint.get('accuracy', best_acc)
         best_loss = checkpoint.get('loss', best_loss)
         start_epoch = checkpoint.get('epoch', start_epoch)
 
@@ -61,11 +61,11 @@ def fit(model,
         }
         if epoch_loss < best_loss:
             best_loss = epoch_loss
-            torch.save(save_checkpoint, save_path + '/' + 'best-loss-%s.pth' % best_loss)
+            torch.save(save_checkpoint, save_path + '/' + 'best-loss.pth')
             torch.save(model, save_path + '/' + 'best-loss-model.pth')
         if acc > best_acc:
             best_acc = acc
-            torch.save(save_checkpoint, save_path + '/' + 'best-acc-%s.pth' % best_acc)
+            torch.save(save_checkpoint, save_path + '/' + 'best-acc.pth')
             torch.save(model, save_path + '/' + 'best-acc-model.pth')
         torch.save(save_checkpoint, save_path + '/' + 'last-checkpoint.pth')
 
