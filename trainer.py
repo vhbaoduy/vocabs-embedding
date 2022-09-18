@@ -46,7 +46,7 @@ def fit(model,
             scheduler.step()
 
         do_train(model, train_loader, optimizer, loss_fn, metrics, use_gpu)
-        epoch_loss, metrics = do_test(model, val_loader, loss_fn, metrics, use_gpu)
+        epoch_loss, metrics = do_validation(model, val_loader, loss_fn, metrics, use_gpu)
         if scheduler_name == "plateau":
             scheduler.step(metrics=epoch_loss)
         acc = 0
@@ -117,11 +117,11 @@ def do_train(model,
         pbar.set_postfix(ordered_dict)
 
 
-def do_test(model,
-            val_loader,
-            loss_fn,
-            metrics,
-            use_gpu):
+def do_validation(model,
+                  val_loader,
+                  loss_fn,
+                  metrics,
+                  use_gpu):
     with torch.no_grad():
         for metric in metrics:
             metric.reset()

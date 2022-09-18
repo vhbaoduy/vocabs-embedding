@@ -91,7 +91,9 @@ class DataPreparing(object):
         print("Train: %d, Valid: %d, Test: %d"%(len(df_train), len(df_valid), len(df_test)))
 
 if __name__ == '__main__':
-    config = utils.load_config_file('../configs/configs.yaml')
-    data_cfg = config['dataset']
-    data_pre = DataPreparing(data_cfg['root_dir'],data_cfg['output_path'])
-    data_pre.create_dataframe()
+    import numpy as np
+    feats = np.array([[1,2,3],[3,4,5],[5,6,7],[8,9,10]])
+    mean_feat = np.mean(feats, axis=0, keepdims=True)
+    print(feats.shape)
+    print(mean_feat.shape)
+    print(mean_feat)
