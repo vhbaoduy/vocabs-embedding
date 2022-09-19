@@ -9,7 +9,8 @@ class DataPreparing(object):
     def __init__(self,
                  dataset_path,
                  labels,
-                 output_path):
+                 output_path,
+                 create_all=False):
         self.dataset_path = dataset_path
         self.output_path = output_path
         self.train = None
@@ -19,6 +20,7 @@ class DataPreparing(object):
         self.n_classes = 0
         self.speakers = []
         self.n_speakers = 0
+        self.create_all = create_all
 
     def create_dataframe(self):
         print("Prepare data ...")
@@ -89,7 +91,9 @@ class DataPreparing(object):
         df_train = pd.DataFrame(train)
         df_train.to_csv(os.path.join(self.output_path, 'train.csv'), index=False)
         print("Train: %d, Valid: %d, Test: %d"%(len(df_train), len(df_valid), len(df_test)))
-
+        if self.create_all:
+            df = pd.concat([df_train, df_valid, df_test], ignore_index=True)
+            df.to_csv(os.path.join(self.output_path, 'data.csv'), index=False)
 if __name__ == '__main__':
     import numpy as np
     feats = np.array([[1,2,3],[3,4,5],[5,6,7],[8,9,10]])

@@ -63,13 +63,6 @@ if __name__ == '__main__':
     param_cfgs = configs['Parameters']
     checkpoint_cfgs = configs['Checkpoint']
 
-    if not os.path.exists(dataset_cfgs['output_path']):
-        # Prepare data
-        data_preparing = DataPreparing(dataset_cfgs['root_dir'],
-                                       dataset_cfgs['labels'],
-                                       dataset_cfgs['output_path'])
-        data_preparing.create_dataframe()
-
     use_gpu = torch.cuda.is_available()
     print('use_gpu', use_gpu)
     if use_gpu:

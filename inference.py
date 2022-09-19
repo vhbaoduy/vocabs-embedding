@@ -16,6 +16,7 @@ def do_inference(model,
                  save_feature,
                  path,
                  labels,
+                 use_truth,
                  use_gpu):
     with torch.no_grad():
         metric.reset()
@@ -34,6 +35,11 @@ def do_inference(model,
             metric(preds, targets, None)
 
             ordered_dict = {metric.name(): metric.value()}
+            pbar.set_postfix(ordered_dict)
+
+            prediction = preds.data.max(1, keepdim=True)[1]
+            prediction = prediction.cpu().numpy().ravel()
+
             # Convert gpu to cpu
             # preds = preds.cpu().numpy().ravel()
             target = target.cpu().numpy().ravel()
@@ -41,29 +47,36 @@ def do_inference(model,
 
             if save_feature:
                 cur_batch_size = len(batch['path'])
-                ploop = tqdm(cur_batch_size, desc="Save features: ")
-                for i in range(ploop):
+                for i in range(cur_batch_size):
                     file_name = batch['path'][i]
-                    name_class = utils.index_to_label(labels, targets[i])
-                    folder = os.path.join(path, name_class)
+
+                    name_class = utils.index_to_label(labels, prediction[i])
+                    truth_class = utils.index_to_label(labels, targets[i])
+                    if use_truth:
+                        folder = os.path.join(path, truth_class)
+                    else:
+                        folder = os.path.join(path, name_class)
+
                     if not os.path.exists(folder):
                         os.mkdir(folder)
-                    audio_name = file_name.split('\\')[1].split('.')[0]
+                    audio_name = file_name.split('/')[1].split('.')[0]
                     # print(feats[i])
                     # print(feats[i].shape)
-                    np.save(os.path.join(folder, audio_name + ".npy"), feat[i])
-                    if features.has_key(name_class):
+                    np.save(os.path.join(folder,truth_class+"_" + audio_name + ".npy"), feat[i])
+
+                    if use_truth:
+                        name_class = truth_class
+
+                    if name_class in features:
                         features[name_class].append(feat[i])
                     else:
                         features[name_class] = [feat[i]]
 
-            pbar.set_postfix(ordered_dict)
-
         print("Calculating mean ...")
         for label in labels:
-            folder = os.path.join(path, name_class)
+            folder = os.path.join(path, label)
             np.save(os.path.join(folder, label + '_mean.npy'),
-                    np.mean(np.array(features[label])), axis=0)
+                    np.mean(np.array(features[label]), axis=0))
 
         return metric
 
@@ -86,6 +99,7 @@ if __name__ == '__main__':
                         help="optional")
     parser.add_argument('-path', type=str, default='./inferences',
                         help="path to store features")
+    parser.add_argument('-use_truth', type=bool, help='use ground truth')
     args = parser.parse_args()
 
     # Parse arguments
@@ -98,6 +112,7 @@ if __name__ == '__main__':
     path = args.path
     batch_size = args.batch_size
     path_to_df = args.path_to_df
+    use_truth = args.use_truth
 
     # Load configs
     configs = utils.load_config_file(os.path.join('./configs', config_file))
@@ -105,13 +120,6 @@ if __name__ == '__main__':
     audio_cfgs = configs['AudioProcessing']
     param_cfgs = configs['Parameters']
     checkpoint_cfgs = configs['Checkpoint']
-
-    if not os.path.exists(dataset_cfgs['output_path']):
-        # Prepare data
-        data_preparing = DataPreparing(dataset_cfgs['root_dir'],
-                                       dataset_cfgs['labels'],
-                                       dataset_cfgs['output_path'])
-        data_preparing.create_dataframe()
 
     use_gpu = torch.cuda.is_available()
     print('use_gpu', use_gpu)
@@ -146,6 +154,8 @@ if __name__ == '__main__':
         model = nn.DataParallel(model).cuda()
 
     metric_learning = AccumulatedAccuracyMetric()
+    if not os.path.exists(path):
+        os.mkdir(path)
 
     do_inference(model=model,
                  data_loader=test_dataloader,
@@ -153,4 +163,5 @@ if __name__ == '__main__':
                  save_feature=save_feature,
                  path=path,
                  labels=labels,
+                 use_truth=use_truth,
                  use_gpu=use_gpu)
