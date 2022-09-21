@@ -1,6 +1,15 @@
-import torchaudio
-from speechbrain.pretrained import EncoderClassifier
-classifier = EncoderClassifier.from_hparams(source="D:/speechbrain/templates/speaker_id/model")
+from speechbrain.pretrained import EncoderDecoderASR
+
+asr_model = EncoderDecoderASR.from_hparams(source="D:/speechbrain/templates/speaker_id/model", hparams_file="D:/speechbrain/templates/speaker_id/model/hyperparams.yaml", savedir="pretrained_model")
+asr_model.transcribe_file('D:/speechbrain/templates/speaker_id/data/tensorflow-speech-recognition/train/0a9f9af7/0a9f9af7_bird_down.wav')
+
+
+
+
+
+# import torchaudio
+# from speechbrain.pretrained import EncoderClassifier
+# classifier = EncoderClassifier.from_hparams(source="D:/speechbrain/templates/speaker_id/model")
 # signal, fs =torchaudio.load('D:/speechbrain/templates/speaker_id/data/tensorflow-speech-recognition/train/0a9f9af7/0a9f9af7_bird_down.wav')
 
 # # Compute speaker embeddings

@@ -1,232 +1,102 @@
 {
-  "0c2ca723_bird_three": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\0c2ca723\\0c2ca723_bird_three.wav",
+  "b06c19b0_three_tree_2": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\b06c19b0\\b06c19b0_three_tree_2.wav",
     "length": 2.0,
-    "spk_id": "0c2ca723"
+    "spk_id": "b06c19b0"
   },
-  "2c7c33e8_bird_five": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2c7c33e8\\2c7c33e8_bird_five.wav",
-    "length": 1.83475,
-    "spk_id": "2c7c33e8"
-  },
-  "1b459024_bird_on": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1b459024\\1b459024_bird_on.wav",
+  "d9ae8983_three_tree_2": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\d9ae8983\\d9ae8983_three_tree_2.wav",
     "length": 2.0,
-    "spk_id": "1b459024"
+    "spk_id": "d9ae8983"
   },
-  "00b01445_bird_six": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\00b01445\\00b01445_bird_six.wav",
+  "36de13e1_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\36de13e1\\36de13e1_three_tree_3.wav",
     "length": 2.0,
-    "spk_id": "00b01445"
+    "spk_id": "36de13e1"
   },
-  "1c3f4fac_bird_dog": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1c3f4fac\\1c3f4fac_bird_dog.wav",
+  "019fa366_three_tree_0": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\019fa366\\019fa366_three_tree_0.wav",
     "length": 2.0,
-    "spk_id": "1c3f4fac"
+    "spk_id": "019fa366"
   },
-  "2d3c8dcb_bird_three": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2d3c8dcb\\2d3c8dcb_bird_three.wav",
-    "length": 2.0,
-    "spk_id": "2d3c8dcb"
-  },
-  "1bc45db9_bird_right": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1bc45db9\\1bc45db9_bird_right.wav",
-    "length": 2.0,
-    "spk_id": "1bc45db9"
-  },
-  "2c6d3924_bird_off": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2c6d3924\\2c6d3924_bird_off.wav",
-    "length": 2.0,
-    "spk_id": "2c6d3924"
-  },
-  "2e73212b_bird_left": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2e73212b\\2e73212b_bird_left.wav",
-    "length": 1.9386875,
-    "spk_id": "2e73212b"
-  },
-  "1b755c65_bird_house": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1b755c65\\1b755c65_bird_house.wav",
-    "length": 2.0,
-    "spk_id": "1b755c65"
-  },
-  "0fa1e7a9_bird_five": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\0fa1e7a9\\0fa1e7a9_bird_five.wav",
-    "length": 2.0,
-    "spk_id": "0fa1e7a9"
-  },
-  "2bd2cad5_bird_five": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2bd2cad5\\2bd2cad5_bird_five.wav",
-    "length": 1.3468125,
-    "spk_id": "2bd2cad5"
-  },
-  "2f666bb2_bird_down": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2f666bb2\\2f666bb2_bird_down.wav",
-    "length": 2.0,
-    "spk_id": "2f666bb2"
-  },
-  "0b40aa8e_bird_five": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\0b40aa8e\\0b40aa8e_bird_five.wav",
-    "length": 2.0,
-    "spk_id": "0b40aa8e"
-  },
-  "0f250098_bird_cat": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\0f250098\\0f250098_bird_cat.wav",
-    "length": 2.0,
-    "spk_id": "0f250098"
-  },
-  "1cc80e39_bird_dog": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1cc80e39\\1cc80e39_bird_dog.wav",
-    "length": 1.7895,
-    "spk_id": "1cc80e39"
-  },
-  "2bdbe5f7_bird_on": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2bdbe5f7\\2bdbe5f7_bird_on.wav",
-    "length": 2.0,
-    "spk_id": "2bdbe5f7"
-  },
-  "0a9f9af7_bird_three": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\0a9f9af7\\0a9f9af7_bird_three.wav",
-    "length": 1.8106875,
-    "spk_id": "0a9f9af7"
-  },
-  "1a073312_bird_cat": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1a073312\\1a073312_bird_cat.wav",
-    "length": 2.0,
-    "spk_id": "1a073312"
-  },
-  "1b755c65_bird_off": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1b755c65\\1b755c65_bird_off.wav",
-    "length": 2.0,
-    "spk_id": "1b755c65"
-  },
-  "2c7c33e8_bird_go": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2c7c33e8\\2c7c33e8_bird_go.wav",
-    "length": 1.981375,
-    "spk_id": "2c7c33e8"
-  },
-  "1f653d27_bird_three": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1f653d27\\1f653d27_bird_three.wav",
+  "9712cce0_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\9712cce0\\9712cce0_three_tree_3.wav",
     "length": 1.896,
-    "spk_id": "1f653d27"
+    "spk_id": "9712cce0"
   },
-  "1c3f4fac_bird_six": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1c3f4fac\\1c3f4fac_bird_six.wav",
+  "a1a59b72_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\a1a59b72\\a1a59b72_three_tree_3.wav",
     "length": 2.0,
-    "spk_id": "1c3f4fac"
+    "spk_id": "a1a59b72"
   },
-  "00b01445_bird_down": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\00b01445\\00b01445_bird_down.wav",
+  "a1a59b72_three_tree_2": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\a1a59b72\\a1a59b72_three_tree_2.wav",
     "length": 2.0,
-    "spk_id": "00b01445"
+    "spk_id": "a1a59b72"
   },
-  "2da58b32_bird_down": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2da58b32\\2da58b32_bird_down.wav",
+  "b19f7f5f_three_tree_0": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\b19f7f5f\\b19f7f5f_three_tree_0.wav",
     "length": 2.0,
-    "spk_id": "2da58b32"
+    "spk_id": "b19f7f5f"
   },
-  "2bd2cad5_bird_on": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2bd2cad5\\2bd2cad5_bird_on.wav",
-    "length": 1.2539375,
-    "spk_id": "2bd2cad5"
-  },
-  "1d1fe0a0_bird_left": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1d1fe0a0\\1d1fe0a0_bird_left.wav",
+  "863880b7_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\863880b7\\863880b7_three_tree_3.wav",
     "length": 2.0,
-    "spk_id": "1d1fe0a0"
+    "spk_id": "863880b7"
   },
-  "1ffd513b_bird_nine": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1ffd513b\\1ffd513b_bird_nine.wav",
+  "1626bc5a_three_tree_1": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1626bc5a\\1626bc5a_three_tree_1.wav",
     "length": 2.0,
-    "spk_id": "1ffd513b"
+    "spk_id": "1626bc5a"
   },
-  "2d3c8dcb_bird_go": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2d3c8dcb\\2d3c8dcb_bird_go.wav",
+  "b63fea9e_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\b63fea9e\\b63fea9e_three_tree_3.wav",
     "length": 2.0,
-    "spk_id": "2d3c8dcb"
+    "spk_id": "b63fea9e"
   },
-  "1b459024_bird_house": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1b459024\\1b459024_bird_house.wav",
+  "e0ff1e9c_three_tree_0": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\e0ff1e9c\\e0ff1e9c_three_tree_0.wav",
     "length": 2.0,
-    "spk_id": "1b459024"
+    "spk_id": "e0ff1e9c"
   },
-  "1b63157b_bird_go": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1b63157b\\1b63157b_bird_go.wav",
+  "80c45ed6_three_tree_1": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\80c45ed6\\80c45ed6_three_tree_1.wav",
     "length": 2.0,
-    "spk_id": "1b63157b"
+    "spk_id": "80c45ed6"
   },
-  "2bdbe5f7_bird_six": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2bdbe5f7\\2bdbe5f7_bird_six.wav",
+  "626e323f_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\626e323f\\626e323f_three_tree_3.wav",
+    "length": 1.7183125,
+    "spk_id": "626e323f"
+  },
+  "65ec06e5_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\65ec06e5\\65ec06e5_three_tree_3.wav",
     "length": 2.0,
-    "spk_id": "2bdbe5f7"
+    "spk_id": "65ec06e5"
   },
-  "1ed557b9_bird_go": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1ed557b9\\1ed557b9_bird_go.wav",
+  "9efe5140_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\9efe5140\\9efe5140_three_tree_3.wav",
+    "length": 1.981375,
+    "spk_id": "9efe5140"
+  },
+  "1626bc5a_three_tree_2": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1626bc5a\\1626bc5a_three_tree_2.wav",
     "length": 2.0,
-    "spk_id": "1ed557b9"
+    "spk_id": "1626bc5a"
   },
-  "2c6d3924_bird_down": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2c6d3924\\2c6d3924_bird_down.wav",
+  "4845bb10_three_tree_2": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\4845bb10\\4845bb10_three_tree_2.wav",
     "length": 2.0,
-    "spk_id": "2c6d3924"
+    "spk_id": "4845bb10"
   },
-  "2c6446f7_bird_five": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2c6446f7\\2c6446f7_bird_five.wav",
+  "4845bb10_three_tree_3": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\4845bb10\\4845bb10_three_tree_3.wav",
     "length": 2.0,
-    "spk_id": "2c6446f7"
+    "spk_id": "4845bb10"
   },
-  "00b01445_bird_left": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\00b01445\\00b01445_bird_left.wav",
+  "571c044e_three_tree_2": {
+    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\571c044e\\571c044e_three_tree_2.wav",
     "length": 2.0,
-    "spk_id": "00b01445"
-  },
-  "1cc80e39_bird_down": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1cc80e39\\1cc80e39_bird_down.wav",
-    "length": 1.579,
-    "spk_id": "1cc80e39"
-  },
-  "1d1fe0a0_bird_off": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1d1fe0a0\\1d1fe0a0_bird_off.wav",
-    "length": 2.0,
-    "spk_id": "1d1fe0a0"
-  },
-  "0ff728b5_bird_three": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\0ff728b5\\0ff728b5_bird_three.wav",
-    "length": 2.0,
-    "spk_id": "0ff728b5"
-  },
-  "2b715941_bird_five": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\2b715941\\2b715941_bird_five.wav",
-    "length": 2.0,
-    "spk_id": "2b715941"
-  },
-  "1a4259c3_bird_go": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1a4259c3\\1a4259c3_bird_go.wav",
-    "length": 1.5325625,
-    "spk_id": "1a4259c3"
-  },
-  "0b40aa8e_bird_down": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\0b40aa8e\\0b40aa8e_bird_down.wav",
-    "length": 2.0,
-    "spk_id": "0b40aa8e"
-  },
-  "1b755c65_bird_cat": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1b755c65\\1b755c65_bird_cat.wav",
-    "length": 2.0,
-    "spk_id": "1b755c65"
-  },
-  "1ffd513b_bird_six": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1ffd513b\\1ffd513b_bird_six.wav",
-    "length": 2.0,
-    "spk_id": "1ffd513b"
-  },
-  "00b01445_bird_marvin": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\00b01445\\00b01445_bird_marvin.wav",
-    "length": 2.0,
-    "spk_id": "00b01445"
-  },
-  "1dce06e8_bird_three": {
-    "wav": "{data_root}\\tensorflow-speech-recognition\\train\\1dce06e8\\1dce06e8_bird_three.wav",
-    "length": 2.0,
-    "spk_id": "1dce06e8"
+    "spk_id": "571c044e"
   }
 }
