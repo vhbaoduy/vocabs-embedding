@@ -45,7 +45,8 @@ if __name__ == '__main__':
     parser.add_argument('-triplet_selector', type=str, default='hardest',
                         choices=['hardest', 'random_hard', 'semi_hard'],
                         help="type of triplet selector")
-    parser.add_argument('-loss_fn', type=str, choices=['triplet, softmax_triplet'])
+    parser.add_argument('-loss_fn', type=str, choices=['triplet', 'softmax_triplet'])
+    parser.add_argument('-classify', type=bool, default=False)
     parser.add_argument('-alpha', type=float, default=0.5)
     parser.add_argument('-beta', type=float, default=0.5)
 
@@ -58,6 +59,7 @@ if __name__ == '__main__':
     feature = args.feature
     triplet_selector = args.triplet_selector
     type_loss = args.loss_fn
+    classify = args.classify
 
     # Load configs
     configs = utils.load_config_file(os.path.join('./configs', config_file))
@@ -120,7 +122,8 @@ if __name__ == '__main__':
     model = Network(model_name = model_name,
                     embedding_dims=embedding_dims,
                     l2_norm=param_cfgs['l2_normalized'],
-                    num_classes=len(dataset_cfgs['labels']))
+                    num_classes=len(dataset_cfgs['labels']),
+                    classify=classify)
 
     lr = param_cfgs['lr']
     weight_decay = param_cfgs['weight_decay']
@@ -137,6 +140,7 @@ if __name__ == '__main__':
     schedulers = get_scheduler(param_cfgs, optimizer)
 
     loss_fn = make_loss_fn(selective_type=triplet_selector,
+                           type_loss=type_loss,
                            margin=param_cfgs['triplet_margin'],
                            alpha=args.alpha,
                            beta=args.beta)
