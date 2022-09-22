@@ -6,6 +6,7 @@ from transforms import *
 from torch.utils.data import DataLoader
 from losses import *
 from metrics import *
+import yaml
 
 def get_scheduler(param_cfgs, optimizer):
     scheduler_name = param_cfgs['lr_scheduler']
@@ -36,7 +37,7 @@ if __name__ == '__main__':
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-config_file', default='configs.yaml', type=str, help='name of config file')
     parser.add_argument('-model_name', default='resnet15', type=str,
-                        choices=['resnet15', 'resnext'],
+                        choices=['resnet15', 'resnext', 'bc_resnet'],
                         help='model name as backbone')
     parser.add_argument('-embedding_dims', type=int, default=128, help="dimension of embeddings")
     parser.add_argument('-feature', type=str, default='mel_spectrogram', choices=['mfcc', 'mel_spectrogram'],
@@ -44,6 +45,7 @@ if __name__ == '__main__':
     parser.add_argument('-triplet_selector', type=str, default='hardest',
                         choices=['hardest', 'random_hard', 'semi_hard'],
                         help="type of triplet selector")
+    parser.add_argument('-loss_fn', type=str, choices=['triplet, softmax_triplet'])
     parser.add_argument('-alpha', type=float, default=0.5)
     parser.add_argument('-beta', type=float, default=0.5)
 
@@ -55,6 +57,7 @@ if __name__ == '__main__':
     embedding_dims = args.embedding_dims
     feature = args.feature
     triplet_selector = args.triplet_selector
+    type_loss = args.loss_fn
 
     # Load configs
     configs = utils.load_config_file(os.path.join('./configs', config_file))
@@ -147,7 +150,13 @@ if __name__ == '__main__':
     if not os.path.exists(checkpoint_cfgs['checkpoint_path']):
         os.mkdir(checkpoint_cfgs['checkpoint_path'])
 
-    metric_learnings = [AccumulatedAccuracyMetric(),AverageNonzeroTripletsMetric()]
+    with open(checkpoint_cfgs['checkpoint_path'] + '/config.yaml', 'w') as outfile:
+        yaml.dump(configs, outfile, default_flow_style=False)
+
+    if type_loss == 'softmax_triplet':
+        metric_learnings = [AccumulatedAccuracyMetric(),AverageNonzeroTripletsMetric()]
+    else:
+        metric_learnings = [AverageNonzeroTripletsMetric()]
 
     fit(
         model=model,

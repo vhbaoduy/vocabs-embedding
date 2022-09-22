@@ -16,7 +16,7 @@ def do_inference(model,
                  save_feature,
                  path,
                  labels,
-                 use_truth,
+                 mode,
                  use_gpu):
     with torch.no_grad():
         metric.reset()
@@ -37,40 +37,51 @@ def do_inference(model,
             ordered_dict = {metric.name(): metric.value()}
             pbar.set_postfix(ordered_dict)
 
-            prediction = preds.data.max(1, keepdim=True)[1]
-            prediction = prediction.cpu().numpy().ravel()
+            if preds is not None:
+                prediction = preds.data.max(1, keepdim=True)[1]
+                prediction = prediction.cpu().numpy().ravel()
 
             # Convert gpu to cpu
             # preds = preds.cpu().numpy().ravel()
-            target = target.cpu().numpy().ravel()
+            targets = targets.cpu().numpy().ravel()
             feat = feat.cpu().numpy()
 
             if save_feature:
                 cur_batch_size = len(batch['path'])
                 for i in range(cur_batch_size):
                     file_name = batch['path'][i]
-
-                    name_class = utils.index_to_label(labels, prediction[i])
+                    if preds is not None:
+                        name_class = utils.index_to_label(labels, prediction[i])
                     truth_class = utils.index_to_label(labels, targets[i])
-                    if use_truth:
+                    if mode == 'truth' or mode == 'intersect':
                         folder = os.path.join(path, truth_class)
-                    else:
+                    elif model == 'predict':
                         folder = os.path.join(path, name_class)
 
                     if not os.path.exists(folder):
                         os.mkdir(folder)
                     audio_name = file_name.split('/')[1].split('.')[0]
-                    # print(feats[i])
-                    # print(feats[i].shape)
-                    np.save(os.path.join(folder,truth_class+"_" + audio_name + ".npy"), feat[i])
 
-                    if use_truth:
-                        name_class = truth_class
-
-                    if name_class in features:
-                        features[name_class].append(feat[i])
+                    if mode == 'intersect':
+                        if name_class == truth_class:
+                            np.save(os.path.join(folder, truth_class + "_" + audio_name + ".npy"), feat[i])
                     else:
-                        features[name_class] = [feat[i]]
+                        np.save(os.path.join(folder, truth_class + "_" + audio_name + ".npy"), feat[i])
+
+                    if mode == 'truth':
+                        key = truth_class
+                    elif mode == 'predict':
+                        key = name_class
+                    else:
+                        if truth_class == name_class:
+                            key = truth_class
+                        else:
+                            continue
+
+                    if key in features:
+                        features[key].append(feat[i])
+                    else:
+                        features[key] = [feat[i]]
 
         print("Calculating mean ...")
         for label in labels:
@@ -86,7 +97,7 @@ if __name__ == '__main__':
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('-config_file', default='configs.yaml', type=str, help='name of config file')
     parser.add_argument('-model_name', default='resnet15', type=str,
-                        choices=['resnet15', 'resnext'],
+                        choices=['resnet15', 'resnext', 'bc_resnet'],
                         help='model name as backbone')
     parser.add_argument('-model_path', type=str, help='path to model')
     parser.add_argument('-embedding_dims', type=int, default=128, help="dimension of embeddings")
@@ -99,7 +110,7 @@ if __name__ == '__main__':
                         help="optional")
     parser.add_argument('-path', type=str, default='./inferences',
                         help="path to store features")
-    parser.add_argument('-use_truth', type=bool, help='use ground truth')
+    parser.add_argument('-mode', type=str, choices=['truth', 'predict', 'intersect'], help='use ground truth')
     args = parser.parse_args()
 
     # Parse arguments
@@ -112,7 +123,7 @@ if __name__ == '__main__':
     path = args.path
     batch_size = args.batch_size
     path_to_df = args.path_to_df
-    use_truth = args.use_truth
+    mode = args.mode
 
     # Load configs
     configs = utils.load_config_file(os.path.join('./configs', config_file))
@@ -163,5 +174,5 @@ if __name__ == '__main__':
                  save_feature=save_feature,
                  path=path,
                  labels=labels,
-                 use_truth=use_truth,
+                 mode=mode,
                  use_gpu=use_gpu)

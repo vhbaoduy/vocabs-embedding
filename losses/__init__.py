@@ -3,6 +3,7 @@ from .triplet_selector import *
 
 
 def make_loss_fn(selective_type,
+                 type_loss,
                  margin,
                  alpha,
                  beta):
@@ -23,8 +24,11 @@ def make_loss_fn(selective_type,
 
     triplet_loss = OnlineTripletLoss(margin=margin, triplet_selector=triplet_selector)
 
-    def loss_fn(scores, feat, target):
-        loss, len_triplet = triplet_loss(feat, target)
-        return alpha * loss + beta * F.cross_entropy(scores, target), len_triplet
-
+    if type_loss == 'softmax_triplet':
+        def loss_fn(scores, feat, target):
+            loss, len_triplet = triplet_loss(feat, target)
+            return alpha * loss + beta * F.cross_entropy(scores, target), len_triplet
+    elif type_loss == 'triplet':
+        def loss_fn(scores, feat, target):
+            return triplet_loss(feat, target)
     return loss_fn
