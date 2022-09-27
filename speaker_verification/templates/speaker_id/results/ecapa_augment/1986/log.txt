@@ -1,0 +1,448 @@
+2022-09-28 00:14:12,042 - speechbrain.core - INFO - Beginning experiment!
+2022-09-28 00:14:12,046 - speechbrain.core - INFO - Experiment folder: results/ecapa_augment/1986
+2022-09-28 00:14:13,924 - speechbrain.utils.superpowers - DEBUG - appdirs==1.4.4
+atomicwrites==1.4.1
+attrs==22.1.0
+black==19.10b0
+certifi @ file:///C:/Windows/TEMP/abs_e9b7158a-aa56-4a5b-87b6-c00d295b01fanefpc8_o/croots/recipe/certifi_1655968940823/work/certifi
+cffi==1.15.1
+cfgv==3.3.1
+charset-normalizer==2.1.1
+click==8.0.4
+colorama==0.4.5
+distlib==0.3.6
+entrypoints==0.3
+filelock==3.8.0
+flake8==3.7.9
+huggingface-hub==0.9.1
+HyperPyYAML==1.0.1
+identify==2.5.5
+idna==3.4
+joblib==1.2.0
+mccabe==0.6.1
+more-itertools==8.14.0
+nodeenv==1.7.0
+numpy==1.23.3
+packaging==21.3
+pathspec==0.10.1
+platformdirs==2.5.2
+pluggy==0.13.1
+pre-commit==2.20.0
+py==1.11.0
+pycodestyle==2.5.0
+pycparser==2.21
+pyflakes==2.1.1
+pyparsing==3.0.9
+pytest==5.4.1
+PyYAML==6.0
+regex==2022.9.13
+requests==2.28.1
+ruamel.yaml==0.17.21
+ruamel.yaml.clib==0.2.6
+scipy==1.8.1
+sentencepiece==0.1.97
+SoundFile==0.10.3.post1
+-e git+https://github.com/speechbrain/speechbrain.git@28f6cecced5f035b0b6c97ba99d6490d07a0af3d#egg=speechbrain
+toml==0.10.2
+torch==1.12.1
+torchaudio==0.12.1
+tqdm==4.64.1
+typed-ast==1.5.4
+typing_extensions==4.3.0
+urllib3==1.26.12
+virtualenv==20.16.5
+wcwidth==0.2.5
+wincertstore==0.2
+yamllint==1.23.0
+
+
+2022-09-28 00:14:14,009 - speechbrain.utils.superpowers - DEBUG - 28f6cecc
+
+
+2022-09-28 00:14:14,010 - speechbrain.core - INFO - Info: ckpt_interval_minutes arg from hparam file is used
+2022-09-28 00:14:14,011 - speechbrain.core - ERROR - Exception:
+Traceback (most recent call last):
+  File "train_speaker_embeddings.py", line 243, in <module>
+    speaker_brain = SpeakerBrain(
+  File "D:\speechbrain\speechbrain\core.py", line 512, in __init__
+    torch.cuda.set_device(int(self.device[-1]))
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\cuda\__init__.py", line 314, in set_device
+    torch._C._cuda_setDevice(device)
+AttributeError: module 'torch._C' has no attribute '_cuda_setDevice'
+2022-09-28 00:15:09,293 - speechbrain.core - INFO - Beginning experiment!
+2022-09-28 00:15:09,299 - speechbrain.core - INFO - Experiment folder: results/ecapa_augment/1986
+2022-09-28 00:15:10,540 - speechbrain.utils.superpowers - DEBUG - appdirs==1.4.4
+atomicwrites==1.4.1
+attrs==22.1.0
+black==19.10b0
+certifi @ file:///C:/Windows/TEMP/abs_e9b7158a-aa56-4a5b-87b6-c00d295b01fanefpc8_o/croots/recipe/certifi_1655968940823/work/certifi
+cffi==1.15.1
+cfgv==3.3.1
+charset-normalizer==2.1.1
+click==8.0.4
+colorama==0.4.5
+distlib==0.3.6
+entrypoints==0.3
+filelock==3.8.0
+flake8==3.7.9
+huggingface-hub==0.9.1
+HyperPyYAML==1.0.1
+identify==2.5.5
+idna==3.4
+joblib==1.2.0
+mccabe==0.6.1
+more-itertools==8.14.0
+nodeenv==1.7.0
+numpy==1.23.3
+packaging==21.3
+pathspec==0.10.1
+platformdirs==2.5.2
+pluggy==0.13.1
+pre-commit==2.20.0
+py==1.11.0
+pycodestyle==2.5.0
+pycparser==2.21
+pyflakes==2.1.1
+pyparsing==3.0.9
+pytest==5.4.1
+PyYAML==6.0
+regex==2022.9.13
+requests==2.28.1
+ruamel.yaml==0.17.21
+ruamel.yaml.clib==0.2.6
+scipy==1.8.1
+sentencepiece==0.1.97
+SoundFile==0.10.3.post1
+-e git+https://github.com/speechbrain/speechbrain.git@28f6cecced5f035b0b6c97ba99d6490d07a0af3d#egg=speechbrain
+toml==0.10.2
+torch==1.12.1
+torchaudio==0.12.1
+tqdm==4.64.1
+typed-ast==1.5.4
+typing_extensions==4.3.0
+urllib3==1.26.12
+virtualenv==20.16.5
+wcwidth==0.2.5
+wincertstore==0.2
+yamllint==1.23.0
+
+
+2022-09-28 00:15:10,598 - speechbrain.utils.superpowers - DEBUG - 28f6cecc
+
+
+2022-09-28 00:15:10,599 - speechbrain.core - INFO - Info: ckpt_interval_minutes arg from hparam file is used
+2022-09-28 00:15:10,603 - speechbrain.core - INFO - 22.2M trainable parameters in SpeakerBrain
+2022-09-28 00:15:10,605 - speechbrain.utils.checkpoints - INFO - Would load a checkpoint here, but none found yet.
+2022-09-28 00:15:10,606 - speechbrain.utils.epoch_loop - INFO - Going into epoch 1
+2022-09-28 00:15:10,619 - speechbrain.core - ERROR - Exception:
+Traceback (most recent call last):
+  File "train_speaker_embeddings.py", line 252, in <module>
+    speaker_brain.fit(
+  File "D:\speechbrain\speechbrain\core.py", line 1153, in fit
+    self._fit_train(train_set=train_set, epoch=epoch, enable=enable)
+  File "D:\speechbrain\speechbrain\core.py", line 1004, in _fit_train
+    for batch in t:
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\tqdm\std.py", line 1195, in __iter__
+    for obj in iterable:
+  File "D:\speechbrain\speechbrain\dataio\dataloader.py", line 222, in __iter__
+    iterator = super().__iter__()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 444, in __iter__
+    return self._get_iterator()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 390, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 1077, in __init__
+    w.start()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\context.py", line 327, in _Popen
+    return Popen(process_obj)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+AttributeError: Can't pickle local object 'dataio_prep.<locals>.audio_pipeline'
+2022-09-28 00:16:00,631 - speechbrain.core - INFO - Beginning experiment!
+2022-09-28 00:16:00,644 - speechbrain.core - INFO - Experiment folder: results/ecapa_augment/1986
+2022-09-28 00:16:01,897 - speechbrain.utils.superpowers - DEBUG - appdirs==1.4.4
+atomicwrites==1.4.1
+attrs==22.1.0
+black==19.10b0
+certifi @ file:///C:/Windows/TEMP/abs_e9b7158a-aa56-4a5b-87b6-c00d295b01fanefpc8_o/croots/recipe/certifi_1655968940823/work/certifi
+cffi==1.15.1
+cfgv==3.3.1
+charset-normalizer==2.1.1
+click==8.0.4
+colorama==0.4.5
+distlib==0.3.6
+entrypoints==0.3
+filelock==3.8.0
+flake8==3.7.9
+huggingface-hub==0.9.1
+HyperPyYAML==1.0.1
+identify==2.5.5
+idna==3.4
+joblib==1.2.0
+mccabe==0.6.1
+more-itertools==8.14.0
+nodeenv==1.7.0
+numpy==1.23.3
+packaging==21.3
+pathspec==0.10.1
+platformdirs==2.5.2
+pluggy==0.13.1
+pre-commit==2.20.0
+py==1.11.0
+pycodestyle==2.5.0
+pycparser==2.21
+pyflakes==2.1.1
+pyparsing==3.0.9
+pytest==5.4.1
+PyYAML==6.0
+regex==2022.9.13
+requests==2.28.1
+ruamel.yaml==0.17.21
+ruamel.yaml.clib==0.2.6
+scipy==1.8.1
+sentencepiece==0.1.97
+SoundFile==0.10.3.post1
+-e git+https://github.com/speechbrain/speechbrain.git@28f6cecced5f035b0b6c97ba99d6490d07a0af3d#egg=speechbrain
+toml==0.10.2
+torch==1.12.1
+torchaudio==0.12.1
+tqdm==4.64.1
+typed-ast==1.5.4
+typing_extensions==4.3.0
+urllib3==1.26.12
+virtualenv==20.16.5
+wcwidth==0.2.5
+wincertstore==0.2
+yamllint==1.23.0
+
+
+2022-09-28 00:16:01,949 - speechbrain.utils.superpowers - DEBUG - 28f6cecc
+
+
+2022-09-28 00:16:01,949 - speechbrain.core - INFO - Info: ckpt_interval_minutes arg from hparam file is used
+2022-09-28 00:16:01,952 - speechbrain.core - INFO - 22.2M trainable parameters in SpeakerBrain
+2022-09-28 00:16:01,955 - speechbrain.utils.checkpoints - INFO - Would load a checkpoint here, but none found yet.
+2022-09-28 00:16:01,956 - speechbrain.utils.epoch_loop - INFO - Going into epoch 1
+2022-09-28 00:16:01,967 - speechbrain.core - ERROR - Exception:
+Traceback (most recent call last):
+  File "train_speaker_embeddings.py", line 252, in <module>
+    speaker_brain.fit(
+  File "D:\speechbrain\speechbrain\core.py", line 1153, in fit
+    self._fit_train(train_set=train_set, epoch=epoch, enable=enable)
+  File "D:\speechbrain\speechbrain\core.py", line 1004, in _fit_train
+    for batch in t:
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\tqdm\std.py", line 1195, in __iter__
+    for obj in iterable:
+  File "D:\speechbrain\speechbrain\dataio\dataloader.py", line 222, in __iter__
+    iterator = super().__iter__()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 444, in __iter__
+    return self._get_iterator()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 390, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 1077, in __init__
+    w.start()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\context.py", line 327, in _Popen
+    return Popen(process_obj)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+AttributeError: Can't pickle local object 'dataio_prep.<locals>.audio_pipeline'
+2022-09-28 00:18:47,995 - speechbrain.core - INFO - Beginning experiment!
+2022-09-28 00:18:48,009 - speechbrain.core - INFO - Experiment folder: results/ecapa_augment/1986
+2022-09-28 00:18:49,237 - speechbrain.utils.superpowers - DEBUG - appdirs==1.4.4
+atomicwrites==1.4.1
+attrs==22.1.0
+black==19.10b0
+certifi @ file:///C:/Windows/TEMP/abs_e9b7158a-aa56-4a5b-87b6-c00d295b01fanefpc8_o/croots/recipe/certifi_1655968940823/work/certifi
+cffi==1.15.1
+cfgv==3.3.1
+charset-normalizer==2.1.1
+click==8.0.4
+colorama==0.4.5
+distlib==0.3.6
+entrypoints==0.3
+filelock==3.8.0
+flake8==3.7.9
+huggingface-hub==0.9.1
+HyperPyYAML==1.0.1
+identify==2.5.5
+idna==3.4
+joblib==1.2.0
+mccabe==0.6.1
+more-itertools==8.14.0
+nodeenv==1.7.0
+numpy==1.23.3
+packaging==21.3
+pathspec==0.10.1
+platformdirs==2.5.2
+pluggy==0.13.1
+pre-commit==2.20.0
+py==1.11.0
+pycodestyle==2.5.0
+pycparser==2.21
+pyflakes==2.1.1
+pyparsing==3.0.9
+pytest==5.4.1
+PyYAML==6.0
+regex==2022.9.13
+requests==2.28.1
+ruamel.yaml==0.17.21
+ruamel.yaml.clib==0.2.6
+scipy==1.8.1
+sentencepiece==0.1.97
+SoundFile==0.10.3.post1
+-e git+https://github.com/speechbrain/speechbrain.git@28f6cecced5f035b0b6c97ba99d6490d07a0af3d#egg=speechbrain
+toml==0.10.2
+torch==1.12.1
+torchaudio==0.12.1
+tqdm==4.64.1
+typed-ast==1.5.4
+typing_extensions==4.3.0
+urllib3==1.26.12
+virtualenv==20.16.5
+wcwidth==0.2.5
+wincertstore==0.2
+yamllint==1.23.0
+
+
+2022-09-28 00:18:49,295 - speechbrain.utils.superpowers - DEBUG - 28f6cecc
+
+
+2022-09-28 00:18:49,296 - speechbrain.core - INFO - Info: ckpt_interval_minutes arg from hparam file is used
+2022-09-28 00:18:49,298 - speechbrain.core - INFO - 22.2M trainable parameters in SpeakerBrain
+2022-09-28 00:18:49,302 - speechbrain.utils.checkpoints - INFO - Would load a checkpoint here, but none found yet.
+2022-09-28 00:18:49,302 - speechbrain.utils.epoch_loop - INFO - Going into epoch 1
+2022-09-28 00:18:49,312 - speechbrain.core - ERROR - Exception:
+Traceback (most recent call last):
+  File "train_speaker_embeddings.py", line 252, in <module>
+    speaker_brain.fit(
+  File "D:\speechbrain\speechbrain\core.py", line 1153, in fit
+    self._fit_train(train_set=train_set, epoch=epoch, enable=enable)
+  File "D:\speechbrain\speechbrain\core.py", line 1004, in _fit_train
+    for batch in t:
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\tqdm\std.py", line 1195, in __iter__
+    for obj in iterable:
+  File "D:\speechbrain\speechbrain\dataio\dataloader.py", line 222, in __iter__
+    iterator = super().__iter__()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 444, in __iter__
+    return self._get_iterator()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 390, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 1077, in __init__
+    w.start()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\context.py", line 327, in _Popen
+    return Popen(process_obj)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+AttributeError: Can't pickle local object 'dataio_prep.<locals>.audio_pipeline'
+2022-09-28 00:20:37,130 - speechbrain.core - INFO - Beginning experiment!
+2022-09-28 00:20:37,145 - speechbrain.core - INFO - Experiment folder: results/ecapa_augment/1986
+2022-09-28 00:20:38,332 - speechbrain.utils.superpowers - DEBUG - appdirs==1.4.4
+atomicwrites==1.4.1
+attrs==22.1.0
+black==19.10b0
+certifi @ file:///C:/Windows/TEMP/abs_e9b7158a-aa56-4a5b-87b6-c00d295b01fanefpc8_o/croots/recipe/certifi_1655968940823/work/certifi
+cffi==1.15.1
+cfgv==3.3.1
+charset-normalizer==2.1.1
+click==8.0.4
+colorama==0.4.5
+dill==0.3.5.1
+distlib==0.3.6
+entrypoints==0.3
+filelock==3.8.0
+flake8==3.7.9
+huggingface-hub==0.9.1
+HyperPyYAML==1.0.1
+identify==2.5.5
+idna==3.4
+joblib==1.2.0
+mccabe==0.6.1
+more-itertools==8.14.0
+nodeenv==1.7.0
+numpy==1.23.3
+packaging==21.3
+pathspec==0.10.1
+platformdirs==2.5.2
+pluggy==0.13.1
+pre-commit==2.20.0
+py==1.11.0
+pycodestyle==2.5.0
+pycparser==2.21
+pyflakes==2.1.1
+pyparsing==3.0.9
+pytest==5.4.1
+PyYAML==6.0
+regex==2022.9.13
+requests==2.28.1
+ruamel.yaml==0.17.21
+ruamel.yaml.clib==0.2.6
+scipy==1.8.1
+sentencepiece==0.1.97
+SoundFile==0.10.3.post1
+-e git+https://github.com/speechbrain/speechbrain.git@28f6cecced5f035b0b6c97ba99d6490d07a0af3d#egg=speechbrain
+toml==0.10.2
+torch==1.12.1
+torchaudio==0.12.1
+tqdm==4.64.1
+typed-ast==1.5.4
+typing_extensions==4.3.0
+urllib3==1.26.12
+virtualenv==20.16.5
+wcwidth==0.2.5
+wincertstore==0.2
+yamllint==1.23.0
+
+
+2022-09-28 00:20:38,389 - speechbrain.utils.superpowers - DEBUG - 28f6cecc
+
+
+2022-09-28 00:20:38,390 - speechbrain.core - INFO - Info: ckpt_interval_minutes arg from hparam file is used
+2022-09-28 00:20:38,392 - speechbrain.core - INFO - 22.2M trainable parameters in SpeakerBrain
+2022-09-28 00:20:38,396 - speechbrain.utils.checkpoints - INFO - Would load a checkpoint here, but none found yet.
+2022-09-28 00:20:38,397 - speechbrain.utils.epoch_loop - INFO - Going into epoch 1
+2022-09-28 00:20:38,410 - speechbrain.core - ERROR - Exception:
+Traceback (most recent call last):
+  File "train_speaker_embeddings.py", line 252, in <module>
+    speaker_brain.fit(
+  File "D:\speechbrain\speechbrain\core.py", line 1153, in fit
+    self._fit_train(train_set=train_set, epoch=epoch, enable=enable)
+  File "D:\speechbrain\speechbrain\core.py", line 1004, in _fit_train
+    for batch in t:
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\tqdm\std.py", line 1195, in __iter__
+    for obj in iterable:
+  File "D:\speechbrain\speechbrain\dataio\dataloader.py", line 222, in __iter__
+    iterator = super().__iter__()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 444, in __iter__
+    return self._get_iterator()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 390, in _get_iterator
+    return _MultiProcessingDataLoaderIter(self)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\site-packages\torch\utils\data\dataloader.py", line 1077, in __init__
+    w.start()
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\process.py", line 121, in start
+    self._popen = self._Popen(self)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\context.py", line 224, in _Popen
+    return _default_context.get_context().Process._Popen(process_obj)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\context.py", line 327, in _Popen
+    return Popen(process_obj)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\popen_spawn_win32.py", line 93, in __init__
+    reduction.dump(process_obj, to_child)
+  File "C:\Users\IBM\anaconda3\envs\speaker_verification\lib\multiprocessing\reduction.py", line 60, in dump
+    ForkingPickler(file, protocol).dump(obj)
+AttributeError: Can't pickle local object 'dataio_prep.<locals>.audio_pipeline'

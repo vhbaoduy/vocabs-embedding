@@ -1,17 +1,31 @@
-from speechbrain.pretrained import EncoderClassifier
-import torchaudio
+# from speechbrain.pretrained import EncoderClassifier
+# import torchaudio
 
-classifier = EncoderClassifier.from_hparams(source="model/", hparams_file='hparams_inference.yaml', savedir="model/")
+# classifier = EncoderClassifier.from_hparams(source="model/", hparams_file='hparams_inference.yaml', savedir="model/")
 
-audio_file = r'D:\tensorflow-speech-recognition-challenge\out_balance\\3d53244b\\3d53244b_three_down_18.wav'
-signal, fs = torchaudio.load(audio_file) 
-output_probs, score, index, text_lab = classifier.classify_batch(signal)
-print('Predicted: ' + text_lab[0])
+# # audio_file = r'D:\tensorflow-speech-recognition-challenge\out_balance_1\\4f2ab70c\\4f2ab70c_three_down_1.wav'
+# audio_file = r'D:\tensorflow-speech-recognition-challenge\train\audio\stop\4f2ab70c_nohash_0.wav'
 
-embeddings = classifier.encode_batch(signal)
-output_probs, score, index, text_lab = classifier.classify_batch(signal)
+# signal, fs = torchaudio.load(audio_file) 
+# output_probs, score, index, text_lab = classifier.classify_batch(signal)
+# print('Predicted: ' + text_lab[0])
 
-print(output_probs)
+# embeddings = classifier.encode_batch(signal)
+# # output_probs, score, index, text_lab = classifier.classify_batch(signal)
+
+# print(output_probs)
+# print(score)
+# print(index)
+# print(text_lab)
+
+
+from speechbrain.pretrained import SpeakerRecognition
+verification = SpeakerRecognition.from_hparams(source="model/", hparams_file='hparams_inference.yaml', savedir="model/")
+
+file1 = r'D:\tensorflow-speech-recognition-challenge\out_balance_1\\4f2ab70c\\4f2ab70c_three_down_1.wav'
+file2 = r'D:\tensorflow-speech-recognition-challenge\out_balance_1\\4f2ab70c\\4f2ab70c_three_down_3.wav'
+
+score, prediction = verification.verify_files(file1, file2)
+
 print(score)
-print(index)
-print(text_lab)
+print(prediction) # True = same speaker, False=Different speakers
