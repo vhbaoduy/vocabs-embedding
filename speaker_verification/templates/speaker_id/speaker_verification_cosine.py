@@ -237,7 +237,7 @@ if __name__ == "__main__":
         verification_pairs_file=veri_file_path,
         splits=["train", "dev", "test"],
         split_ratio=[90, 10],
-        seg_dur=3.0,
+        seg_dur=2.0,
         source=params["voxceleb_source"]
         if "voxceleb_source" in params
         else None,
@@ -271,7 +271,7 @@ if __name__ == "__main__":
 
     positive_scores, negative_scores = get_verification_scores(veri_test)
     del enrol_dict, test_dict
-
+    print(positive_scores, negative_scores)
     eer, th = EER(torch.tensor(positive_scores), torch.tensor(negative_scores))
     logger.info("EER(%%)=%f", eer * 100)
 

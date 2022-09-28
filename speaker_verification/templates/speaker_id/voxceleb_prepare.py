@@ -140,7 +140,6 @@ def prepare_voxceleb(
     wav_lst_train, wav_lst_dev = _get_utt_split_lists(
         data_folder, split_ratio, verification_pairs_file, split_speaker
     )
-
     # Creating csv file for training data
     if "train" in splits:
         prepare_csv(
@@ -348,7 +347,6 @@ def prepare_csv(seg_dur, wav_lst, csv_file, random_segment=False, amp_th=0):
     # For assigning unique ID to each chunk
     my_sep = "--"
     entry = []
-    # print(wav_lst)
     # Processing all the wav files in the list
     for wav_file in tqdm(wav_lst, dynamic_ncols=True):
         # Getting sentence and speaker ids
@@ -383,9 +381,9 @@ def prepare_csv(seg_dur, wav_lst, csv_file, random_segment=False, amp_th=0):
             ]
             entry.append(csv_line)
         else:
-            print("***************************")
+            # print("***************************")
             audio_duration = signal.shape[0] / SAMPLERATE
-            print(seg_dur, audio_id, audio_duration)
+            # print(seg_dur, audio_id, audio_duration)
             uniq_chunks_list = _get_chunks(seg_dur, audio_id, audio_duration)
             # print(uniq_chunks_list)
             for chunk in uniq_chunks_list:
@@ -395,7 +393,6 @@ def prepare_csv(seg_dur, wav_lst, csv_file, random_segment=False, amp_th=0):
 
                 #  Avoid chunks with very small energy
                 mean_sig = torch.mean(np.abs(signal[start_sample:end_sample]))
-                print(mean_sig, amp_th)
                 if mean_sig < amp_th:
                     continue
 
@@ -411,7 +408,6 @@ def prepare_csv(seg_dur, wav_lst, csv_file, random_segment=False, amp_th=0):
                 entry.append(csv_line)
 
     csv_output = csv_output + entry
-    # print(entry)
     # Writing the csv lines
     with open(csv_file, mode="w") as csv_f:
         csv_writer = csv.writer(
@@ -491,7 +487,6 @@ def prepare_csv_enrol_test(data_folders, save_folder, verification_pairs_file):
 
         csv_output = csv_output_head + enrol_csv
         csv_file = os.path.join(save_folder, ENROL_CSV)
-
         # Writing the csv lines
         with open(csv_file, mode="w") as csv_f:
             csv_writer = csv.writer(
