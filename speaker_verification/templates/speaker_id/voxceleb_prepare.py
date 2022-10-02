@@ -288,13 +288,13 @@ def _get_utt_split_lists(
             for f in glob.glob(path, recursive=True):
                 try:
                     spk_id = f.split("/train/")[1].split("/")[0]
-                    print(spk_id)
+                    # print(spk_id)
                 except ValueError:
                     logger.info(f"Malformed path: {f}")
                     continue
                 if spk_id not in test_spks:
                     audio_files_list.append(f)
-            print(len(audio_files_list))
+            # print(len(audio_files_list))
             random.shuffle(audio_files_list)
             split = int(0.01 * split_ratio[0] * len(audio_files_list))
             train_snts = audio_files_list[:split]
@@ -360,7 +360,7 @@ def prepare_csv(seg_dur, wav_lst, csv_file, random_segment=False, amp_th=0):
         except ValueError:
             logger.info(f"Malformed path: {wav_file}")
             continue
-        print(spk_id,sess_id,utt_id)
+        # print(spk_id,sess_id,utt_id)
         audio_id = my_sep.join([spk_id, sess_id, utt_id.split(".")[0]])
 
         # Reading the signal (to retrieve duration in seconds)
