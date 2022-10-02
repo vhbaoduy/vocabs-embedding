@@ -265,12 +265,12 @@ def _get_utt_split_lists(
 
         test_spks = [snt.split("/")[0] for snt in test_lst]
         # print(test_spks)
-        path = os.path.join(data_folder, "tensorflow-speech-recognition", "**", "*.wav")
+        path = os.path.join(data_folder, "out", "**", "*.wav")
         if split_speaker:
             # avoid test speakers for train and dev splits
             audio_files_dict = {}
             for f in glob.glob(path, recursive=True):
-                spk_id = f.split("/wav/")[1].split("/")[0]
+                spk_id = f.split("\\train\\")[1].split("\\")[0]
                 if spk_id not in test_spks:
                     audio_files_dict.setdefault(spk_id, []).append(f)
 
@@ -287,13 +287,14 @@ def _get_utt_split_lists(
             audio_files_list = []
             for f in glob.glob(path, recursive=True):
                 try:
-                    spk_id = f.split("/")[0]
+                    spk_id = f.split("\\train\\")[1].split("\\")[0]
+                    print(spk_id)
                 except ValueError:
                     logger.info(f"Malformed path: {f}")
                     continue
                 if spk_id not in test_spks:
                     audio_files_list.append(f)
-            # print(audio_files_list)
+            print(len(audio_files_list))
             random.shuffle(audio_files_list)
             split = int(0.01 * split_ratio[0] * len(audio_files_list))
             train_snts = audio_files_list[:split]
@@ -351,15 +352,15 @@ def prepare_csv(seg_dur, wav_lst, csv_file, random_segment=False, amp_th=0):
     for wav_file in tqdm(wav_lst, dynamic_ncols=True):
         # Getting sentence and speaker ids
         try:
-            tmp = wav_file.split("\\")[-1]
             # [spk_id, sess_id, utt_id] = wav_file.split("/")[-3:]
             spk_id = wav_file.split("\\")[-2]
-            sess_id = tmp.split(".")[0].replace(spk_id+"_","")
-            utt_id = sess_id
+            tmp = wav_file.split("\\")[-1].split(".")[0].replace(spk_id+"_","").split("_")
+            sess_id = tmp[0] + "_" + tmp[1]
+            utt_id = tmp[2]
         except ValueError:
             logger.info(f"Malformed path: {wav_file}")
             continue
-        # print(spk_id,sess_id,utt_id)
+        print(spk_id,sess_id,utt_id)
         audio_id = my_sep.join([spk_id, sess_id, utt_id.split(".")[0]])
 
         # Reading the signal (to retrieve duration in seconds)
@@ -464,7 +465,7 @@ def prepare_csv_enrol_test(data_folders, save_folder, verification_pairs_file):
         logger.info("preparing enrol csv")
         enrol_csv = []
         for id in enrol_ids:
-            wav = data_folder + "/tensorflow-speech-recognition/train/"+ id + ".wav"
+            wav = data_folder + "/out/train/"+ id + ".wav"
 
             # Reading the signal (to retrieve duration in seconds)
             signal, fs = torchaudio.load(wav)
@@ -499,7 +500,7 @@ def prepare_csv_enrol_test(data_folders, save_folder, verification_pairs_file):
         logger.info("preparing test csv")
         test_csv = []
         for id in test_ids:
-            wav = data_folder + "/tensorflow-speech-recognition/train/"+ id + ".wav"
+            wav = data_folder + "/out/train/"+ id + ".wav"
             # wav = data_folder + "/wav/" + id + ".wav"
 
             # Reading the signal (to retrieve duration in seconds)
@@ -532,7 +533,7 @@ def prepare_csv_enrol_test(data_folders, save_folder, verification_pairs_file):
             for line in csv_output:
                 csv_writer.writerow(line)
 
-# data_folder = r'D:\tensorflow-speech-recognition-challenge\out_balance_1'
+# data_folder = r'D:\out-challenge\out_balance_1'
 # save_folder = 'D:/VoxData/'
 # splits = ['train', 'dev']
 # split_ratio = [90, 10]

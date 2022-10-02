@@ -48,7 +48,7 @@ number_of_epochs: 10
 batch_size: 16
 lr_start: 0.001
 lr_final: 0.0001
-n_classes: 50 # In this case, we have 28 speakers
+n_classes: 33 # In this case, we have 28 speakers
 emb_dim: 512 # dimensionality of the embeddings
 dataloader_options:
     batch_size: !ref <batch_size>
@@ -137,3 +137,12 @@ checkpointer: !new:speechbrain.utils.checkpoints.Checkpointer
         classifier: !ref <classifier>
         normalizer: !ref <mean_var_norm>
         counter: !ref <epoch_counter>
+
+# Functions that compute the statistics to track during the validation step.
+error_rate_computer: !name:speechbrain.utils.metric_stats.ErrorRateStats
+
+cer_computer: !name:speechbrain.utils.metric_stats.ErrorRateStats
+    split_tokens: True
+
+train_stats: !name:speechbrain.utils.metric_stats.BinaryMetricStats
+test_stats: !name:speechbrain.utils.metric_stats.BinaryMetricStats

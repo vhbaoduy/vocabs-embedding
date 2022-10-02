@@ -128,6 +128,10 @@ class SpkIdBrain(sb.Brain):
             batch.id, predictions, spkid, lens, reduction="batch"
         )
 
+        # spkid_1 = spkid.to(predictions.device)
+        # predictions_1 = predictions[:, : spkid.shape[-1], 0]
+        self.eer_metric.append(batch.id, predictions, spkid)
+
         # Compute classification error at test time
         if stage != sb.Stage.TRAIN:
             self.error_metrics.append(batch.id, predictions, spkid, lens)
@@ -151,6 +155,8 @@ class SpkIdBrain(sb.Brain):
             metric=sb.nnet.losses.nll_loss
         )
 
+        self.eer_metric = sb.utils.metric_stats.BinaryMetricStats()
+
         # Set up evaluation-only statistics trackers
         if stage != sb.Stage.TRAIN:
             self.error_metrics = self.hparams.error_stats()
@@ -172,12 +178,19 @@ class SpkIdBrain(sb.Brain):
         # Store the train loss until the validation stage.
         if stage == sb.Stage.TRAIN:
             self.train_loss = stage_loss
+            # train_summary = self.eer_metric.summarize(threshold=0.5)
+            # print("Epoch %d completed" % epoch)
+            # print("Train loss: %.4f" % stage_loss)
+            # print("Train Precision: %.2f" % train_summary["precision"])
+            # print("Train Recall: %.2f" % train_summary["recall"])
+
 
         # Summarize the statistics from the stage for record-keeping.
         else:
             stats = {
                 "loss": stage_loss,
                 "error": self.error_metrics.summarize("average"),
+                # "eer": self.eer_metric.summarize("FAR")
             }
 
         # At the end of validation...
@@ -192,6 +205,7 @@ class SpkIdBrain(sb.Brain):
                 train_stats={"loss": self.train_loss},
                 valid_stats=stats,
             )
+
 
             # Save the current checkpoint and delete previous checkpoints,
             self.checkpointer.save_and_keep_only(meta=stats, min_keys=["error"])
