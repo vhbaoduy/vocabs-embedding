@@ -270,7 +270,7 @@ def _get_utt_split_lists(
             # avoid test speakers for train and dev splits
             audio_files_dict = {}
             for f in glob.glob(path, recursive=True):
-                spk_id = f.split("\\train\\")[1].split("\\")[0]
+                spk_id = f.split("/train/")[1].split("/")[0]
                 if spk_id not in test_spks:
                     audio_files_dict.setdefault(spk_id, []).append(f)
 
@@ -287,7 +287,7 @@ def _get_utt_split_lists(
             audio_files_list = []
             for f in glob.glob(path, recursive=True):
                 try:
-                    spk_id = f.split("\\train\\")[1].split("\\")[0]
+                    spk_id = f.split("/train/")[1].split("/")[0]
                     print(spk_id)
                 except ValueError:
                     logger.info(f"Malformed path: {f}")
@@ -353,8 +353,8 @@ def prepare_csv(seg_dur, wav_lst, csv_file, random_segment=False, amp_th=0):
         # Getting sentence and speaker ids
         try:
             # [spk_id, sess_id, utt_id] = wav_file.split("/")[-3:]
-            spk_id = wav_file.split("\\")[-2]
-            tmp = wav_file.split("\\")[-1].split(".")[0].replace(spk_id+"_","").split("_")
+            spk_id = wav_file.split("/")[-2]
+            tmp = wav_file.split("/")[-1].split(".")[0].replace(spk_id+"_","").split("_")
             sess_id = tmp[0] + "_" + tmp[1]
             utt_id = tmp[2]
         except ValueError:
