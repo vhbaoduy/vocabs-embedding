@@ -217,10 +217,11 @@ if __name__ == "__main__":
         params = load_hyperpyyaml(fin, overrides)
 
     # Download verification list (to exlude verification sentences from train)
-    veri_file_path = os.path.join(
-        params["save_folder"], "veri_test2.txt")
+    # veri_file_path = os.path.join(
+    #     params["save_folder"], "veri_test2.txt")
     # download_file(params["verification_file"], veri_file_path)
 
+    veri_file_path = "verification.txt"
     from voxceleb_prepare import prepare_voxceleb  # noqa E402
 
     # Create experiment directory

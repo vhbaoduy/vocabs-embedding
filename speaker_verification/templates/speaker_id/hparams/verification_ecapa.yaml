@@ -11,7 +11,7 @@ __set_seed: !apply:torch.manual_seed [!ref <seed>]
 data_folder: ./data #e.g., /localscratch/voxceleb1
 output_folder: ./results/ecapa_augment/1986
 save_folder: ./results/ecapa_augment/1986/save
-device: 'cpu'
+device: 'cuda:0'
 
 # Use the following links for the official voxceleb splits:
 # VoxCeleb1 (cleaned): https://www.robots.ox.ac.uk/~vgg/data/voxceleb/meta/veri_test2.txt
