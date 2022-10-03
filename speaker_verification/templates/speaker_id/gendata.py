@@ -10,7 +10,7 @@ speaker_sample = 5
 vocab_sample = speaker_sample ** 2
 
 speaker_num = 50
-verification_num = 10
+verification_num = 5
 src_path="data/speech_commands_v0.02/"
 dest_path="data/out/train/"
 words = ['yes', 'yes']

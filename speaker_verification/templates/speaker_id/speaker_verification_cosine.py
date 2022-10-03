@@ -238,7 +238,7 @@ if __name__ == "__main__":
         verification_pairs_file=veri_file_path,
         splits=["train", "dev", "test"],
         split_ratio=[90, 10],
-        seg_dur=2.0,
+        seg_dur=1.0,
         source=params["voxceleb_source"]
         if "voxceleb_source" in params
         else None,

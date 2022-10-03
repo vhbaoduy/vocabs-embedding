@@ -477,7 +477,8 @@ def prepare_csv_enrol_test(data_folders, save_folder, verification_pairs_file):
             audio_duration = signal.shape[0] / SAMPLERATE
             start_sample = 0
             stop_sample = signal.shape[0]
-            [spk_id, sess_id, utt_id] = wav.split("/")[-3:]
+            # [spk_id, sess_id, utt_id] = wav.split("/")[-3:]
+            spk_id = wav.split("/")[-2]
 
             csv_line = [
                 id,
@@ -513,8 +514,9 @@ def prepare_csv_enrol_test(data_folders, save_folder, verification_pairs_file):
             audio_duration = signal.shape[0] / SAMPLERATE
             start_sample = 0
             stop_sample = signal.shape[0]
-            [spk_id, sess_id, utt_id] = wav.split("/")[-3:]
-
+            # [spk_id, sess_id, utt_id] = wav.split("/")[-3:]
+            spk_id = wav.split("/")[-2]
+            
             csv_line = [
                 id,
                 audio_duration,
