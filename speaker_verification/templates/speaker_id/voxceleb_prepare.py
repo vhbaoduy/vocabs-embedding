@@ -355,8 +355,6 @@ def prepare_csv(seg_dur, wav_lst, csv_file, random_segment=False, amp_th=0):
             # [spk_id, sess_id, utt_id] = wav_file.split("/")[-3:]
             spk_id = wav_file.split("/")[-2]
             tmp = wav_file.split("/")[-1].split(".")[0].replace(spk_id+"_","").split("_")
-            spk_id = wav_file.split("\\")[-2]
-            tmp = wav_file.split("\\")[-1].split(".")[0].replace(spk_id+"_","").split("_")
             if len(tmp) >= 3:
                 sess_id = tmp[0] + "_" + tmp[1]
                 utt_id = tmp[2]
