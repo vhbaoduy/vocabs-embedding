@@ -5,36 +5,42 @@ import shutil
 from collections import Counter
 import wave
 import random
+import json
 
-speaker_sample = 5
+speaker_sample = 3
 vocab_sample = speaker_sample ** 2
 
-speaker_num = 50
+speaker_num = 67
 verification_num = 5
 src_path="data/speech_commands_v0.02/"
 dest_path="data/out/train/"
-words = ['yes', 'yes']
+words = ['six', 'six']
 single_word = "yes"
 words_file = []
 
 validate_txt = src_path + "testing_list.txt"
 
+def read_info():
+    f = open('info.json')
+    data = json.load(f)
+    return data
+
 def combine_data():
     speakers = []
+    data_info = read_info()
     if not os.path.exists(dest_path):
         os.makedirs(dest_path)
-
+    print(len(data_info['speakers']))
     for word in words:
         matches = [re.match(r'^.*?_', i) for i in os.listdir(os.path.join(src_path, word))]
         words_file.append(Counter([i.group() for i in matches if i]))
-
     count = 0
     for i in words_file[0]:
         if count >= speaker_num:
             break
         speaker = i.replace("_","")
         # print(speaker)
-        if words_file[0][i] < speaker_sample or words_file[1][i] < speaker_sample:
+        if words_file[0][i] < speaker_sample or words_file[1][i] < speaker_sample or speaker not in data_info['speakers']:
             continue
         if not os.path.exists(os.path.join(dest_path,speaker)):
             os.makedirs(os.path.join(dest_path,speaker))
@@ -148,8 +154,8 @@ def create_verfication_list_single_word(speakers):
     f.close()
 
 
-# speakers = combine_data()
-# create_verfication_list(speakers)
+speakers = combine_data()
+create_verfication_list(speakers)
 
-speakers = create_data_single_word(single_word)
-create_verfication_list_single_word(speakers)
+# speakers = create_data_single_word(single_word)
+# create_verfication_list_single_word(speakers)
