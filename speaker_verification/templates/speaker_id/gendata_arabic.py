@@ -69,6 +69,7 @@ def combine_data():
 def create_verfication_list(speakers):
     f = open("verification.txt", 'w')
     random.shuffle(speakers)
+    list_verify = []
     for i in range(len(speakers)//3):
         speaker = speakers[i]
         for count, word in enumerate(os.listdir(os.path.join(dest_path, speaker))):
@@ -78,8 +79,11 @@ def create_verfication_list(speakers):
             hash = word.split("_")[3].split(".")[0]
             # print(vocab, speaker, hash)
             for i in range(verification_num):
-                if str(i) != hash:
-                    f.write(str(1)+" "+speaker+"/"+word+" "+speaker+"/"+speaker+"_"+vocab+"_"+str(i)+".wav\n")
+                file1=word
+                file2=speaker+"_"+vocab+"_"+str(i)+".wav"
+                if str(i) != hash and (file1,file2) not in list_verify and (file2,file1) not in list_verify:
+                    f.write(str(1)+" "+speaker+"/"+file1+" "+speaker+"/"+file2+".wav\n")
+                    list_verify.append((file1,file2))
             
             ran_speaker = []
             while len(ran_speaker) < verification_num:
@@ -87,8 +91,12 @@ def create_verfication_list(speakers):
                 if tmp[0] not in ran_speaker and tmp[0] != speaker:
                     ran_speaker.append(tmp[0])
             for i in range(verification_num):
-                if str(i) != hash:
-                    f.write(str(0)+" "+speaker+"/"+word+" "+ran_speaker[i]+"/"+ran_speaker[i]+"_"+vocab+"_"+str(i)+".wav\n")
+                file1=word
+                file2=ran_speaker[i]+"_"+vocab+"_"+str(i)+".wav"
+                if str(i) != hash and (file1,file2) not in list_verify and (file2,file1) not in list_verify:
+                    f.write(str(0)+" "+speaker+"/"+file1+" "+ran_speaker[i]+"/"+file2+".wav\n")
+                    list_verify.append((file1,file2))
+    print(list_verify)
     f.close()
 
 
