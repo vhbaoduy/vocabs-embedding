@@ -54,7 +54,7 @@ def combine_data():
                 data.append( [w.getparams(), w.readframes(w.getnframes())])
                 w.close()
 
-                w = wave.open(os.path.join(src_path, words[1], speaker+"_nohash_"+str(c1)+".wav"), 'rb')
+                w = wave.open(os.path.join(src_path, words[1], speaker+"_nohash_"+str(c2)+".wav"), 'rb')
                 data.append( [w.getparams(), w.readframes(w.getnframes())] )
                 w.close()
                     
