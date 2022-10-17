@@ -11,7 +11,7 @@ speaker_sample = 10
 vocab_sample = speaker_sample ** 2
 
 speaker_num = 30
-verification_num = 10
+verification_num = speaker_sample
 src_path="data/abdulkaderghandoura-arabic-speech-commands-dataset-72f3438/dataset"
 dest_path="data/out/train/"
 words = ['previous', 'previous']
@@ -78,25 +78,37 @@ def create_verfication_list(speakers):
             vocab = word.split("_")[1] + "_" + word.split("_")[2]
             hash = word.split("_")[3].split(".")[0]
             # print(vocab, speaker, hash)
-            for i in range(verification_num):
+            true_verify = 0
+            for j in range(verification_num):
                 file1=word
-                file2=speaker+"_"+vocab+"_"+str(i)+".wav"
-                if str(i) != hash and (file1,file2) not in list_verify and (file2,file1) not in list_verify:
+                file2=speaker+"_"+vocab+"_"+str(j)+".wav"
+                if str(j) != hash and (file1,file2) not in list_verify and (file2,file1) not in list_verify:
                     f.write(str(1)+" "+speaker+"/"+file1+" "+speaker+"/"+file2+".wav\n")
                     list_verify.append((file1,file2))
+                    true_verify += 1
             
-            ran_speaker = []
-            while len(ran_speaker) < verification_num:
-                tmp = random.sample(speakers, 1)
-                if tmp[0] not in ran_speaker and tmp[0] != speaker:
-                    ran_speaker.append(tmp[0])
-            for i in range(verification_num):
+            ran_speaker_num = 0
+            while ran_speaker_num < true_verify:
+                ran_speaker = random.sample(speakers, 1)
+                j = random.randint(0, speaker_sample-1)
                 file1=word
-                file2=ran_speaker[i]+"_"+vocab+"_"+str(i)+".wav"
-                if str(i) != hash and (file1,file2) not in list_verify and (file2,file1) not in list_verify:
-                    f.write(str(0)+" "+speaker+"/"+file1+" "+ran_speaker[i]+"/"+file2+".wav\n")
+                file2=ran_speaker[0]+"_"+vocab+"_"+str(j)+".wav"
+                if str(j) != hash and (file1,file2) not in list_verify and (file2,file1) not in list_verify:
+                    f.write(str(0)+" "+speaker+"/"+file1+" "+ran_speaker[0]+"/"+file2+".wav\n")
                     list_verify.append((file1,file2))
-    print(list_verify)
+                    ran_speaker_num += 1
+            # ran_speaker = []
+            # while len(ran_speaker) < verification_num:
+            #     tmp = random.sample(speakers, 1)
+            #     if tmp[0] not in ran_speaker and tmp[0] != speaker:
+            #         ran_speaker.append(tmp[0])
+            # for i in range(verification_num):
+            #     file1=word
+            #     file2=ran_speaker[i]+"_"+vocab+"_"+str(i)+".wav"
+            #     if str(i) != hash and (file1,file2) not in list_verify and (file2,file1) not in list_verify:
+            #         f.write(str(0)+" "+speaker+"/"+file1+" "+ran_speaker[i]+"/"+file2+".wav\n")
+            #         list_verify.append((file1,file2))
+    # print(list_verify)
     f.close()
 
 
