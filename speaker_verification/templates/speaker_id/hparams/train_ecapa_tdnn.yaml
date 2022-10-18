@@ -37,7 +37,7 @@ base_lr: 0.00000001
 max_lr: !ref <lr>
 step_size: 65000
 sample_rate: 16000
-sentence_len: 1.0 # seconds
+sentence_len: 2.0 # seconds
 shuffle: True
 random_chunk: True
 
@@ -48,7 +48,7 @@ right_frames: 0
 deltas: False
 
 # Number of speakers
-out_n_neurons: 34
+out_n_neurons: 15
 
 dataloader_options:
     batch_size: !ref <batch_size>
