@@ -11,6 +11,7 @@ Authors
     * Hwidong Na 2020
     * Mirco Ravanelli 2020
 """
+import argparse
 import os
 import sys
 import torch
@@ -221,7 +222,7 @@ if __name__ == "__main__":
     #     params["save_folder"], "veri_test2.txt")
     # download_file(params["verification_file"], veri_file_path)
 
-    veri_file_path = "verification.txt"
+    veri_file_path = "verification_1.txt"
     from voxceleb_prepare import prepare_voxceleb  # noqa E402
 
     # Create experiment directory
@@ -238,7 +239,7 @@ if __name__ == "__main__":
         verification_pairs_file=veri_file_path,
         splits=["train", "dev", "test"],
         split_ratio=[90, 10],
-        seg_dur=2.0,
+        seg_dur=1.0,
         source=params["voxceleb_source"]
         if "voxceleb_source" in params
         else None,
@@ -272,7 +273,7 @@ if __name__ == "__main__":
 
     positive_scores, negative_scores = get_verification_scores(veri_test)
     del enrol_dict, test_dict
-    print(positive_scores, negative_scores)
+    #print(positive_scores, negative_scores)
     eer, th = EER(torch.tensor(positive_scores), torch.tensor(negative_scores))
     logger.info("EER(%%)=%f", eer * 100)
 

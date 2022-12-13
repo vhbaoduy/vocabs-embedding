@@ -24,6 +24,9 @@ from speechbrain.utils.data_utils import download_file
 from hyperpyyaml import load_hyperpyyaml
 from speechbrain.utils.distributed import run_on_main
 import dill as pickle
+import os
+import argparse
+# os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 
 class SpeakerBrain(sb.core.Brain):
     """Class for speaker embedding training"
@@ -212,7 +215,7 @@ if __name__ == "__main__":
     #     hparams["save_folder"], os.path.basename(hparams["verification_file"])
     # )
     # download_file(hparams["verification_file"], veri_file_path)
-    veri_file_path = "verification.txt"
+    veri_file_path = "verification_1.txt"
     # Dataset prep (parsing VoxCeleb and annotation into csv files)
     from voxceleb_prepare import prepare_voxceleb  # noqa
 

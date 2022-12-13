@@ -50,6 +50,7 @@ def combine_data():
                 data = []
                 outfile = os.path.join(dest_path, speaker+"/"+speaker+"_"+words[0]+"_"+words[1]+"_"+str((c1*speaker_sample)+c2)+".wav")
 
+                A
                 w = wave.open(os.path.join(src_path, words[0], speaker+"_NO_"+str("{:02d}".format(c1+1))+".wav"), 'rb')
                 data.append( [w.getparams(), w.readframes(w.getnframes())])
                 w.close()

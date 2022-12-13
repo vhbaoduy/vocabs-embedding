@@ -288,11 +288,12 @@ def _get_utt_split_lists(
             for f in glob.glob(path, recursive=True):
                 try:
                     spk_id = f.split("/train/")[1].split("/")[0]
-                    # print(spk_id)
+                    sess_id = f.split("/train/")[1].split("/")[1].split("_")[1].split("_")[0]
+                    # print(sess_id)
                 except ValueError:
                     logger.info(f"Malformed path: {f}")
                     continue
-                if spk_id not in test_spks:
+                if spk_id not in test_spks and "test" not in sess_id:
                     audio_files_list.append(f)
             # print(len(audio_files_list))
             random.shuffle(audio_files_list)
