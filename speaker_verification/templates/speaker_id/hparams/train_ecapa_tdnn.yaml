@@ -48,7 +48,7 @@ right_frames: 0
 deltas: False
 
 # Number of speakers
-out_n_neurons: 30
+out_n_neurons: 24
 
 dataloader_options:
     batch_size: !ref <batch_size>

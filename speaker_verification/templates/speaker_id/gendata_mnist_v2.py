@@ -11,7 +11,7 @@ import argparse
 speaker_sample = 50
 # vocab_sample = speaker_sample ** 2
 
-speaker_num = 60
+speaker_num = 48
 verification_num = speaker_sample
 src_path="data/mnist/dataset"
 words_file = []

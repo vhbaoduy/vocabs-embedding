@@ -1,0 +1,16 @@
+speechbrain.core - Beginning experiment!
+speechbrain.core - Experiment folder: ./results/ecapa_augment/1986
+voxceleb_prepare - 	Creating csv file for the VoxCeleb Dataset..
+Getting file list...
+voxceleb_prepare - 	"Creating csv lists in  ./results/ecapa_augment/1986/save/train.csv..."
+voxceleb_prepare - 	./results/ecapa_augment/1986/save/train.csv successfully created!
+voxceleb_prepare - 	"Creating csv lists in  ./results/ecapa_augment/1986/save/dev.csv..."
+voxceleb_prepare - 	./results/ecapa_augment/1986/save/dev.csv successfully created!
+voxceleb_prepare - preparing enrol csv
+voxceleb_prepare - preparing test csv
+speechbrain.pretrained.fetching - Fetch embedding_model.ckpt: Linking to local file in /root/lmsi/vocabs-embedding/speaker_verification/templates/speaker_id/results/ecapa_augment/1986/save/checkpoint/embedding_model.ckpt.
+speechbrain.utils.parameter_transfer - Loading pretrained files for: embedding_model
+__main__ - Computing enroll/test embeddings...
+__main__ - Computing EER..
+__main__ - EER(%)=8.840136
+__main__ - minDCF=0.963401
