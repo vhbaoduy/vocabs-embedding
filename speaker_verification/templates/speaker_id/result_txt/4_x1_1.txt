@@ -12,5 +12,5 @@ speechbrain.pretrained.fetching - Fetch embedding_model.ckpt: Linking to local f
 speechbrain.utils.parameter_transfer - Loading pretrained files for: embedding_model
 __main__ - Computing enroll/test embeddings...
 __main__ - Computing EER..
-__main__ - EER(%)=8.840136
-__main__ - minDCF=0.963401
+__main__ - EER(%)=11.370748
+__main__ - minDCF=0.881394

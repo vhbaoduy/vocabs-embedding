@@ -13,7 +13,7 @@ speaker_sample = 50
 
 speaker_num = 48
 verification_num = speaker_sample
-src_path="data/mnist/dataset"
+src_path="data/mnist/dataset_male"
 words_file = []
 
 def create_data(words):
@@ -50,7 +50,7 @@ def create_data(words):
         count += 1
     return speakers
 
-def create_verification_list(speakers, times):
+def create_verification_list(speakers, times, words):
     path_file = "verification_" + times + ".txt"
     f = open(path_file, 'w')
     random.shuffle(speakers)
@@ -88,10 +88,11 @@ def create_verification_list(speakers, times):
 
                 # Add to dataset
                 data = []
-                outfile = os.path.join(dest_path, speaker+"/"+file2)
-                w = wave.open(os.path.join(src_path, ran_vocab, speaker+"_NO_"+str(j)+".wav"), 'rb')
-                data.append( [w.getparams(), w.readframes(w.getnframes())])
-                w.close()
+                for tmp in words:
+                    outfile = os.path.join(dest_path, speaker+"/"+file2)
+                    w = wave.open(os.path.join(src_path, ran_vocab, speaker+"_NO_"+str(j)+".wav"), 'rb')
+                    data.append( [w.getparams(), w.readframes(w.getnframes())])
+                    w.close()
                 
                 output = wave.open(outfile, 'wb')
                 output.setparams(data[0][0])
@@ -117,7 +118,7 @@ args = parser.parse_args()
 dest_path = args.dest_path
 
 speakers = create_data(args.words_list)
-create_verification_list(speakers, args.times)
+create_verification_list(speakers, args.times, args.words_list)
 # if args.single_word != None:
 #     speakers = create_data_single_word(args.single_word)
 #     create_verification_list_single_word(speakers, args.times)
